@@ -1,0 +1,47 @@
+.header {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(238, 238, 238);
+    position: relative;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.2);
+}
+.tabs {
+    height: 100%;
+    display: flex;
+    width: max-content;
+    margin: 0 auto;
+}
+.menuItem {
+    width: 100px;
+    color: black;  
+    text-align: center;
+    display: flex;
+    position: relative;
+}
+.menuItem p {
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translate(0, -50%);
+    margin: 0;
+}
+.activeMenuItem {
+    background-color: rgb(224, 224, 224);
+}
+/* 
+.tabs ul {
+    display: flex;
+    height: inherit;
+    margin-bottom: 0;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+}
+.tabs ul li {
+    display: inline-block;
+    height: 100%;
+    width: max-content;
+    display: flex;
+    position: relative; */
+/* } */
+
