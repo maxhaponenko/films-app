@@ -1,0 +1,12 @@
+.tipsBlock {
+    width: 250px;
+    height: auto;
+    margin: 0 auto;
+}
+.tip {
+    padding: 3px 10px 5px 10px;
+    font-size: 0.85rem;
+}
+.tip p {
+    margin-bottom: 0;
+}

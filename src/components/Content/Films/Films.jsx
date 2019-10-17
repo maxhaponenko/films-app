@@ -10,7 +10,7 @@ const Films = (props) => {
         props.deleteCurrentFilm(e)
     }
     let openModal = () => {
-        debugger;
+        // debugger;
         props.changeFilmModalStatus()
         // ModalAddFilm.changeStatus()
     }
