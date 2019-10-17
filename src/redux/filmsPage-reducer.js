@@ -1,208 +1,144 @@
+import { validate } from '@babel/types';
+
 // import Tokenizer from 'sentence-tokenizer'
 // var tokenizer = new Tokenizer('Chuck');
+var _ = require('lodash');
 
-const CHANGE_TEXT_TO_PROCESS = 'CHANGE-TEXT-TO-PROCESS'
 
+const DELETE_CURRENT_FILM = 'DELETE-CURRENT-FILM'
+const CHANGE_FILM_MODAL_STATUS = 'CHANGE-FILM-MODAL-STATUS'
+const CHANGE_INPUT_NAME_TEXT = 'CHANGE-INPUT-NAME-TEXT'
+const CHANGE_INPUT_DESCRIPTION_TEXT = 'CHANGE-INPUT-DESCRIPTION-TEXT'
 
 let initialState = {
     allFilms: [
         {
             id: 1,
-            name: 'Forest Gumb',
-            description: 'Lorem imsumLorem imsum Lorem imsum Lorem imsum Lorem imsumLorem imsum'
+            name: "Green mile",
+            description: "The film stars Tom Hanks as Paul Edgecomb and Michael Clarke Duncan as John Coffey, with supporting roles by David Morse, Bonnie Hunt, and James Cromwell. It also features Dabbs Greer in his final film role as the older Paul Edgecomb before his death in 2007 at the age of 90 from renal failure and heart"
         },
         {
-            id: 1,
-            name: 'Forest Gumb',
-            description: 'Lorem imsumLorem imsum Lorem imsum Lorem imsum Lorem imsumLorem imsum'
+            id: 2,
+            name: "Forrest Gump",
+            description: 'American comedy-drama film directed by Robert Zemeckis and written by Eric Roth. It is based on the 1986 novel by Winston Groom, and stars Tom Hanks, Robin Wright, Gary Sinise, Mykelti Williamson, and Sally Field. The story depicts several decades in the life o'
+        },
+        {
+            id: 3,
+            name: "One Flew Over the Cuckoo's Nest",
+            description: "American comedy-drama film directed by Miloš Forman, based on the 1962 novel One Flew Over the Cuckoo's Nest by Ken Kesey and the play version adapted from the novel by Dale Wasserman. The film stars Jack Nicholson as Randle McMurphy, a new patient at a mental institution, and features a supporting cast of Louise Fletcher, William Redfield, Will Sampson, Sydney Lassick, Brad Dourif, Danny DeVito and Christopher Lloyd in his film debut."
+        },
+        {
+            id: 4,
+            name: "Great Gatsby",
+            description: "Film based on F. Scott Fitzgerald's 1925 novel of the same name. The film was co-written and directed by Baz Luhrmann and stars Leonardo DiCaprio as the eponymous Jay Gatsby, with Tobey Maguire, Carey Mulligan, Joel Edgerton, Isla Fisher and Elizabeth Debicki."
         },
     ],
+    modalAddFilmStatus: false,
+    addFilmForm: {
+        name: '',
+        description: '',
+        validName: {
+            status: false,
+            numberOfSymbols: 0,
+            usingNotAllowedSymbols: false,
+        },
+        validDescription: {
+            status: false,
+            numberOfSymbols: 0,
+            usingNotAllowedSymbols: false,
+        },
+        allTips: [],
+        currentTips: [],
+        addFilmButtonStatus: false
+    }
 }
 
 const filmsPageReducer = (state = initialState, action) => {
     // debugger;
     switch(action.type) {
-        case CHANGE_TEXT_TO_PROCESS:
-            return true
-        // case ADD_SENTENCES_FROM_SUMMARIZED_TEXT: 
-            // return addSentencesFromSummarizedText(state, action)
+        case DELETE_CURRENT_FILM:
+            return deleteCurrentFilm(state, action)
+        case CHANGE_FILM_MODAL_STATUS: 
+            return changeFilmModalStatus(state, action)
+        case CHANGE_INPUT_NAME_TEXT:
+            return changeInputNameText(state, action)
+        case CHANGE_INPUT_DESCRIPTION_TEXT:
+            return changeInputDescriptionText(state, action)
         default: 
             return state
     }  
 }
 
-// const changeTextToProcess = (state, action) => {    // 0. Calls every time user enter symbol in text area 1. Catches total string value entered by user in text area 2. Write new value to object "textToProcess" 3. ReRender SPA
-//     // debugger;    
-//     state.textToProcess = action.text
-//     splitAndCalculateSentences(state, action.text)
-//     countMaximumNumberOfSentencesToChoose(state, state.numberOfSentences)
-//     createArrayOfLabelsForDropdown(state, state.maxNumberOfSentencesToChoose)
-//     calculateOneStepInRange(state) 
-//     createCheckpointsForRange(state)
-//     let newState = { ...state }
-//     return newState
-// }
+const deleteCurrentFilm = (state, action) => {
+    let allFilms = state.allFilms
+    let filmId = action.id
+    let newArray = _.remove(allFilms, (el) => {
+        return el.id !== filmId
+    })
+    state.allFilms = newArray
+    let newState = { ...state }
+    return newState
+}
 
-// // ______________________________
-// // RENDER SENTENCES FROM RESPONSE
-// const addSentencesFromSummarizedText = (state, action) => {
-//     debugger;
-//     state.textSummarized = []
-//     action.data.summary_text.map(item => state.textSummarized.push(item))
-//     let newState = { ...state }
-//     return newState
-// }
+const changeFilmModalStatus = (state) => {
+    // debugger;
+    if (state.modalAddFilmStatus === true) {
+        state.modalAddFilmStatus = false
+    } else if (state.modalAddFilmStatus === false) {
+        state.modalAddFilmStatus = true
+    } else {
+        console.log('Unknown status of modalAddFilm')
+    }
+    // state.modalAddFilmStatus = !state.modalAddFilmStatus
+    let newState = { ...state }
+    return newState
+}
 
-// // ________________________
-// // DROPDOWN AND RANGE LOGIC
-// const changeNumberOfSentencesToProcess = (state, action) => { 
-//     // Executing after user set value in dropdown 
-//     state.numberOfSentencesToProcess = action.number
-//     // console.log("numberOfSentencesToProcess = " + state.numberOfSentencesToProcess)
-//     setPercentOfSentencesToProcess(state);
-//     let newState = { ...state }
-//     return newState
-// }
-
-// const changePercentOfSentencesToProcess = (state, action) => {
-//     // Executing after user set value in range input 
-//     state.rangeData.percentOfSentencesToProcess = action.value
-//     // console.log('percentOfSentencesToProcess = ' + state.rangeData.percentOfSentencesToProcess)
-//     let newState = { ...state }
-//     return newState
-// }
-// const moveRangeToClosestStep = (state, action) => {
-//     // Executing after user released mouse button in range input 
-//     console.log('Range drag is finished on value ' + action.value )
-//     state.rangeData.percentOfSentencesToProcess = action.value
-//     let closest = state.rangeData.checkPoints.sort( (a, b) => Math.abs(action.value - a) - Math.abs(action.value - b) )[0]
-//     console.log('Closest checkpoint = ' + closest)
-//     state.rangeData.percentOfSentencesToProcess = closest
-//     setNumberOfSentencesToProcess(state, closest)
-//     let newState = { ...state }
-//     return newState
-// }
-
-// // ___________________________________________________________
-// // DROPDOWN OR RANGE AUTO SELECT (WHEN ONE OF THEM IS CHANGED)
-// const setNumberOfSentencesToProcess = (state, value) => {
-//     let x = value / state.rangeData.oneStepInRange
-//     state.numberOfSentencesToProcess = Math.round(x)
-//     return state
-// }
-// const setPercentOfSentencesToProcess = (state) => {
-//     // console.log('One step in range = ' + state.rangeData.oneStepInRange)
-//     let totalSteps = state.rangeData.oneStepInRange * state.numberOfSentencesToProcess
-//     let maxPercentSentencesToProcess = state.rangeData.maxPercentSentencesToProcess
-//     let numberOfSentencesToProcess = state.numberOfSentencesToProcess
-//     let dropdownOptionsLength = state.dropdownOptions.length
+const changeInputNameText = (state, action) => {
+    state.addFilmForm.name = action.text
+    console.log('name: ' + state.addFilmForm.name)
+    validateInputs(state)
+    let newState = { ...state }
+    return newState
+}
+const changeInputDescriptionText = (state, action) => {
+    state.addFilmForm.description = action.text
+    console.log('description: ' + state.addFilmForm.description)
+    validateInputs(state)
+    let newState = { ...state }
+    return newState
+}
+const validateInputs = (state) => {
+    if (state.addFilmForm.description.length > 300 || state.addFilmForm.description.length > 40) {
+        alert('Description text length should be less than 300 symbols')
+    } 
+}
+// _______________
+// ACTION CREATORS 
+export const deleteCurrentFilmCreator = (id) => {
+    return {
+        type: DELETE_CURRENT_FILM,
+        id: id 
+    }
+}
+export const changeFilmModalStatusCreator = () => {
     
-//     // Checking if user choose max number of sentences and total steps not equal to 100%
-//     // and if not, anyway set the 100% value
-//     if (totalSteps !== maxPercentSentencesToProcess && numberOfSentencesToProcess === dropdownOptionsLength) {
-//         state.rangeData.percentOfSentencesToProcess = maxPercentSentencesToProcess
-//     } else {
-//         state.rangeData.percentOfSentencesToProcess = totalSteps
-//     } 
-//     console.log('percentOfSentencesToProcess = ' + state.rangeData.percentOfSentencesToProcess +'%')
-//     return state
-// }
-
-// // _______________________
-// // ANALYZE TEXT FROM INPUT
-// const splitAndCalculateSentences = (state, text) => {
-//     let newText = text.replace(/\n/gmi, " ")
-//     tokenizer.setEntry(newText)
-//     state.allSentences = tokenizer.getSentences()
-//     state.numberOfSymbols = text.length
-//     state.numberOfSentences = state.allSentences.length
-//     // console.log('This is all sentences ' + state.allSentences)
-//     // console.log('Number of sentences: ' + state.numberOfSentences);
-//     return state
-// }
-// const calculateOneStepInRange = (state) => {
-//     state.rangeData.oneStepInRange = Math.round(state.rangeData.maxPercentSentencesToProcess / state.maxNumberOfSentencesToChoose)
-//     // debugger
-//     return state
-// }
-// const countMaximumNumberOfSentencesToChoose = (state, number) => {
-//     let value = number / 2
-//     // console.log('numberOfSentences / 2 = ' + value);
-//     let half = Math.floor(value)
-//     // console.log('numberOfSentences / 2 and floor()= ' + half);
-//     if (half < 10) {
-//         state.maxNumberOfSentencesToChoose = half
-//     } else {
-//         state.maxNumberOfSentencesToChoose = 10
-//     }
-//     // debugger
-//     return state
-// }
-// const createArrayOfLabelsForDropdown = (state, number) => {
-//     if (number) {
-//         state.dropdownOptions = []
-//         for ( let e = 0; e < number ; ++e) {
-//             let item = { label: e+1, value: e+1 }
-//             state.dropdownOptions.push(item)
-//             // console.log(state.dropdownOptions);
-//         }
-//     } else {
-//         return false;
-//     }
-//     return state
-// }
-// const createCheckpointsForRange = (state) => {
-//     let newCheckPoints = []
-//     for ( let step = 0; step <= 100; ) {
-//         if (newCheckPoints.length < state.dropdownOptions.length) {
-//             step += state.rangeData.oneStepInRange
-//             newCheckPoints.push(step)
-//             continue;
-//         } else {
-//             console.log('Break!!!')
-//             break;
-//         }
-//     }
-//     newCheckPoints[newCheckPoints.length - 1] = 100
-//     state.rangeData.checkPoints = []
-//     state.rangeData.checkPoints = newCheckPoints
-//     console.log(state.rangeData.checkPoints)
-//     return state
-// }
-
-
-
-// // _______________
-// // ACTION CREATORS 
-// export const changeTextToProcessCreator = (text) => {
-//     return {
-//         type: CHANGE_TEXT_TO_PROCESS,
-//         text: text
-//     }
-// }
-// export const addSentencesFromSummarizedTextCreator = (data) => {
-//     return {
-//         type: ADD_SENTENCES_FROM_SUMMARIZED_TEXT,
-//         data: data
-//     }
-// }
-// export const changeNumberOfSentencesToProcessCreator = (number) => {
-//     return {
-//         type: CHANGE_NUMBER_OF_SENTENCES_TO_PROCESS,
-//         number: number
-//     }
-// }
-// export const changePercentOfSentencesToProcessCreator = (value) => {
-//     return {
-//         type: CHANGE_PERCENT_OF_SENTENCES_TO_PROCESS,
-//         value: value
-//     }
-// }
-// export const moveRangeToClosestStepCreator = (value) => {
-//     return {
-//         type: MOVE_RANGE_TO_CLOSEST_STEP,
-//         value: value
-//     }
-// }
-
+    return {
+        type: CHANGE_FILM_MODAL_STATUS
+    }
+}
+export const changeInputNameTextCreator = (text) => {
+    return {
+        type: CHANGE_INPUT_NAME_TEXT,
+        text: text
+    }
+}
+export const changeInputDescriptionTextCreator= (text) => {
+    return {
+        type: CHANGE_INPUT_DESCRIPTION_TEXT,
+        text: text
+    }
+}
 export default filmsPageReducer
+
+window.state = initialState
