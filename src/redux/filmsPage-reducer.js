@@ -1,7 +1,4 @@
-import { validate, isNumberLiteralTypeAnnotation } from '@babel/types';
-
-// import Tokenizer from 'sentence-tokenizer'
-// var tokenizer = new Tokenizer('Chuck');
+const uuidv1 = require('uuid/v1');
 var _ = require('lodash');
 
 
@@ -9,6 +6,7 @@ const DELETE_CURRENT_FILM = 'DELETE-CURRENT-FILM'
 const CHANGE_FILM_MODAL_STATUS = 'CHANGE-FILM-MODAL-STATUS'
 const CHANGE_INPUT_NAME_TEXT = 'CHANGE-INPUT-NAME-TEXT'
 const CHANGE_INPUT_DESCRIPTION_TEXT = 'CHANGE-INPUT-DESCRIPTION-TEXT'
+const ADD_FILM = 'ADD-FILM'
 
 let initialState = {
     allFilms: [
@@ -44,7 +42,6 @@ let initialState = {
             descriptionLessThan: true,
             descriptionIsEmpty: true,
             inputContainSymbols: false,
-            
         },
         addFilmButtonStatus: false
     }
@@ -61,9 +58,12 @@ const filmsPageReducer = (state = initialState, action) => {
             return changeInputNameText(state, action)
         case CHANGE_INPUT_DESCRIPTION_TEXT:
             return changeInputDescriptionText(state, action)
+        case ADD_FILM:
+            return addFilm(state)
         default: 
             return state
-    }  
+    }
+    
 }
 
 const deleteCurrentFilm = (state, action) => {
@@ -84,7 +84,7 @@ const changeFilmModalStatus = (state) => {
     } else if (state.modalAddFilmStatus === false) {
         state.modalAddFilmStatus = true
     } else {
-        console.log('Unknown status of modalAddFilm')
+        // console.log('Unknown status of modalAddFilm')
     }
     // state.modalAddFilmStatus = !state.modalAddFilmStatus
     let newState = { ...state }
@@ -92,57 +92,87 @@ const changeFilmModalStatus = (state) => {
 }
 
 const changeInputNameText = (state, action) => {
-    // debugger;
     state.addFilmForm.name = action.text
-    // console.log('name: ' + state.addFilmForm.name)
-    validateInputs(state)
+    validateInputName(state)
+    changeAddButtonStatus(state)
+    // console.log(state.addFilmForm.addFilmButtonStatus)
     let newState = { ...state }
     return newState
 }
 const changeInputDescriptionText = (state, action) => {
-    // debugger;
     state.addFilmForm.description = action.text
-    // console.log('description: ' + state.addFilmForm.description)
-    validateInputs(state)
+    validateInputDescription(state)
+    changeAddButtonStatus(state)
+    // console.log(state.addFilmForm.addFilmButtonStatus)
     let newState = { ...state }
     return newState
 }
-const validateInputs = (state) => {
-    let nameText = state.addFilmForm.name
-    let descriptionText = state.addFilmForm.description
-    checkNameForEmpty(state, nameText)
+const changeAddButtonStatus = (state) => {
+    var allCheckpoints = []
+    // console.log('changeAddButtonStatus say ----->')
     // console.log(state.addFilmForm.validation)
-    checkNameForMaxLength(state, nameText)
-    // console.log(state.addFilmForm.validation)
-    checkDescriptionForEmpty(state, descriptionText)
-    // console.log(state.addFilmForm.validation)
-    checkDescriptionForMinLength(state, descriptionText)
-    // console.log(state.addFilmForm.validation)
-    checkDescriptionForMaxLength(state, descriptionText)
-    // console.log(state.addFilmForm.validation)
-    checkForSymbols(state, nameText, descriptionText)
-    // console.log(state.addFilmForm.validation)
-    // let newState = { ...state }
+    let obj = state.addFilmForm.validation
+    allCheckpoints = Object.keys(obj).map(key => obj[key]);
+    // console.log('changeAddButtonStatus say OBJ ----->')
+    // console.log(allCheckpoints)
+    if (allCheckpoints.every(item => item === false)) {
+        state.addFilmForm.addFilmButtonStatus = true
+        return state
+    } else {
+        state.addFilmForm.addFilmButtonStatus = false
+        return state
+    }
+    
+}
+const addFilm = (state) => {
+    let newId = uuidv1()
+    let newFilm = {
+        id: newId,
+        name: state.addFilmForm.name,
+        description: state.addFilmForm.description
+    }
+    // console.log('----------- Before push')
+    // console.log(state.allFilms)
+    state.allFilms.push(newFilm)
+    // console.log('+++++++++++ After push')
+    // console.log(state.allFilms)
+    state.addFilmForm.name = ""
+    state.addFilmForm.description = ""
+    validateInputName(state)
+    validateInputDescription(state)
+    changeAddButtonStatus(state)
+    let newState = { ...state }
+    return newState
+}
+const validateInputName = (state) => {
+    let text = state.addFilmForm.name
+    checkNameForEmpty(state, text)
+    checkNameForMaxLength(state, text)
+    checkForSymbols(state, text)
     return state
-    console.log(state.addFilmForm.validation)
+}
+const validateInputDescription = (state) => {
+    let text = state.addFilmForm.description
+    checkDescriptionForEmpty(state, text)
+    checkDescriptionForMinLength(state, text)
+    checkDescriptionForMaxLength(state, text)
+    checkForSymbols(state, text)
+    return state
 }
 
 
-const checkNameForEmpty = (state, name) => {
-    // debugger;
-    if (name === "") {
+const checkNameForEmpty = (state, text) => {
+    if (text === "") {
         state.addFilmForm.validation.nameIsEmpty = true
-        // console.log('Name text is more than 40 characters')
         return state
     } else {
         state.addFilmForm.validation.nameIsEmpty = false
         return state
     }
 }
-const checkNameForMaxLength = (state, name) => {
-    if (name.length > 40) {
+const checkNameForMaxLength = (state, text) => {
+    if (text.length > 40) {
         state.addFilmForm.validation.nameMoreThan = true
-        // console.log('Name text is more than 40 characters')
         return state
     } else {
         state.addFilmForm.validation.nameMoreThan = false
@@ -150,81 +180,45 @@ const checkNameForMaxLength = (state, name) => {
     }
 }
 
-const checkDescriptionForMinLength = (state, description) => {
-    if (description.length < 50) {
+const checkDescriptionForMinLength = (state, text) => {
+    if (text.length < 50) {
         state.addFilmForm.validation.descriptionLessThan = true
-        // console.log('Show "descriptionLessThan"')
         return state
     } else {    
         state.addFilmForm.validation.descriptionLessThan = false
-        console.log('Hide "descriptionLessThan"')
         return state
     }
 }
-const checkDescriptionForMaxLength = (state, description) => {
-    if (description.length > 300) {
+const checkDescriptionForMaxLength = (state, text) => {
+    if (text.length > 300) {
         state.addFilmForm.validation.descriptionMoreThan = true
-        // console.log('Show "descriptionMoreThan"')
         return state
     } else {
         state.addFilmForm.validation.descriptionMoreThan = false
-        // console.log('Hide "descriptionMoreThan"')
         return state
     }
 }
-const checkDescriptionForEmpty = (state, description) => {
-    if (description === "") {
+const checkDescriptionForEmpty = (state, text) => {
+    if (text === "") {
         state.addFilmForm.validation.descriptionIsEmpty = true
-        // console.log('Show "descriptionIsEmpty"')
         return state
     } else {
         state.addFilmForm.validation.descriptionIsEmpty = false
-        // console.log('Hide "descriptionIsEmpty"')
         return state
     }
 }
 
-const checkForSymbols = (state, name, description) => {
-    if (/[-^&*()_+|~={}\[\]<>\/]/.test(name) || /[-^&*()_+|~={}\[\]<>\/]/.test(description)) {
-        state.addFilmForm.validation.inputContainSymbols = true
-        // console.log('Text should not contain symbols')
-        // console.log('Show "inputContainSymbols"')
+const checkForSymbols = (state, text) => {
+    if (/[&^*()_+|~={}\[\]<>\/]/.test(text)) {
+        state.addFilmForm.validation.inputContainSymbols = true    
         return state
     } else {
         state.addFilmForm.validation.inputContainSymbols = false
-        // console.log('Hide "inputContainSymbols"')
         return state
     }
 }
 
 
-// const splitAndCalculateSentences = (text) => {
-//         let pattern = /(.+?([A-Za-z]|[А-Яа-яїіь].)\.(?:['")\\\s][\"]?)+?\s?)/igm, match
-//         let sentences = []
-//         while( ( match = pattern.exec( text )) != null ) {
-//             if( match.index === pattern.lastIndex ) {
-//                 pattern.lastIndex++
-//             }
-//             sentences.push( match[0] )
-//         };
-//         state.mainPage.allSentences = sentences
-//         state.mainPage.numberOfSymbols = text.length
-//         console.log('This is all sentences ' + state.mainPage.allSentences)
-        
-//         // console.log('numberOfSentences = ' + state.mainPage.allSentences.length)
-//         if (/\s$/.test(text)) {
-//             state.mainPage.numberOfSentences = state.mainPage.allSentences.length
-//             // console.log('first if is worked')
-//         } else {
-//             state.mainPage.numberOfSentences = state.mainPage.allSentences.length + 1
-//             // console.log('second if is worked')
-//         };
-//         // console.log('numberOfSentences after if = ' + state.mainPage.numberOfSentences)
-//         // console.log(sentences);
-//         // console.log('Text length: ' + text.length)
-//         // console.log('All sentences: ' + state.mainPage.allSentences);
-//         // console.log('Number of sentences: ' + state.mainPage.numberOfSentences);
-//     };
 // _______________
 // ACTION CREATORS 
 export const deleteCurrentFilmCreator = (id) => {
@@ -245,12 +239,17 @@ export const changeInputNameTextCreator = (text) => {
         text: text
     }
 }
-export const changeInputDescriptionTextCreator= (text) => {
+export const changeInputDescriptionTextCreator = (text) => {
     return {
         type: CHANGE_INPUT_DESCRIPTION_TEXT,
         text: text
     }
 }
+export const addFilmCreator = () => {
+    return {
+        type: ADD_FILM
+    }
+}
 export default filmsPageReducer
 
-window.state = initialState
+// window.state = initialState

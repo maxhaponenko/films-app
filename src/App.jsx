@@ -16,7 +16,7 @@ const App = (props) => {
             <Header />
             <div className="wrapper">
                 <Route path="/films" render={() => <FilmsContainer />}/>
-                
+                {/* <Route path="/persons" render={() => <PersonsContainer />}/> */}
                 <Redirect from="/" exact to ="/films" />
 
             

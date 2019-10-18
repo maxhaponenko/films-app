@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ModalAddFilm from './ModalAddFilm'
-import { changeFilmModalStatusCreator, changeInputNameTextCreator, changeInputDescriptionTextCreator } from '../../redux/filmsPage-reducer'
+import { changeFilmModalStatusCreator, changeInputNameTextCreator, changeInputDescriptionTextCreator, addFilmCreator } from '../../../redux/filmsPage-reducer'
 
 let mapStateToProps = (state) => {
     return {
@@ -21,6 +21,10 @@ let mapDispatchToProps = (dispatch) => {
         },
         changeInputDescriptionText: (text) => {
             let action = changeInputDescriptionTextCreator(text)
+            dispatch(action)
+        },
+        addFilm: () => {
+            let action = addFilmCreator()
             dispatch(action)
         }
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './Films.module.css'
-import ModalAddFilmContainer from '../../Modals/ModalAddFilmContainer';
+import ModalAddFilmContainer from '../../Modals/ModalAddFilm/ModalAddFilmContainer';
 // import { ModalAddFilm } from '../../Modals/ModalAddFilm';
 
 const Films = (props) => {
@@ -25,7 +25,7 @@ const Films = (props) => {
                     </div>
                     <div className={s.itemGrid}>
                         <div className={s.title}>
-                            {item.name}
+                            <p>{item.name}</p>
                         </div>
                         <div className={s.description}>
                             {item.description}

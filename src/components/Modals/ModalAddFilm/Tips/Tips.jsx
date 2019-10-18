@@ -3,7 +3,8 @@ import s from './Tips.module.css';
 import { MDBAlert } from 'mdbreact';
 
 const Tips = (props) => {
-    debugger;
+
+    // Tips creators
     let tip1 = (value) => {
         // debugger;
         if (value) {
@@ -72,12 +73,15 @@ const Tips = (props) => {
         }
     }
 
+    // Set props to variables
     let nameIsEmpty = props.addFilmForm.validation.nameIsEmpty
     let nameMoreThan = props.addFilmForm.validation.nameMoreThan
     let descriptionIsEmpty = props.addFilmForm.validation.descriptionIsEmpty
     let descriptionMoreThan = props.addFilmForm.validation.descriptionMoreThan
     let descriptionLessThan = props.addFilmForm.validation.descriptionLessThan
     let inputContainSymbols = props.addFilmForm.validation.inputContainSymbols
+
+    // Create tips
     let tipEnterName = tip1(nameIsEmpty)
     let tipEnterDescription = tip2(descriptionIsEmpty)
     let tipNameIsBig = tip3(nameMoreThan)
@@ -85,8 +89,7 @@ const Tips = (props) => {
     let tipDescriptionIsSmall = tip5(descriptionLessThan)
     let tipTextContainsSymbols = tip6(inputContainSymbols)
 
-    console.log('Component say: ')
-    console.log(props.addFilmForm.validation)
+    
     return (
         <div className={s.tipsBlock}>
             {tipEnterName}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBAlert } from 'mdbreact';
-import filmsStyle from '../Content/Films/Films.module.css'
+import filmsStyle from '../../Content/Films/Films.module.css'
 import s from './ModalAddFilm.module.css'
 import TipsContainer from './Tips/TipsContainer'
 
@@ -10,7 +10,8 @@ class ModalAddFilm extends Component {
 		this.state = {
 			modal: this.props.filmsPage.modalAddFilmStatus,
 			name: this.props.filmsPage.addFilmForm.name,
-			description: this.props.filmsPage.addFilmForm.description
+			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus,
+			props: this.props
 		}
 	}
 
@@ -35,6 +36,9 @@ class ModalAddFilm extends Component {
 		})
 		this.props.changeInputDescriptionText(text)
 	}
+	onAddFilm = () => {
+		this.props.addFilm()
+	}
 
 
 	toggle = () => {
@@ -43,12 +47,15 @@ class ModalAddFilm extends Component {
 		});
 		this.props.changeFilmModalStatus()
 	}
-
+ 
 	componentWillReceiveProps() {
+		// console.log('-----> Will Receive starts')
 		this.setState(() => {
 			this.state.modal = this.props.filmsPage.modalAddFilmStatus
-			
-			
+			this.state.addFilmButtonStatus = this.props.filmsPage.addFilmForm.addFilmButtonStatus
+			this.state.description = this.props.filmsPage.addFilmForm.description
+			this.state.name = this.props.filmsPage.addFilmForm.name
+			this.props = this.props
 		})
 		// this.render()
 	}
@@ -58,7 +65,7 @@ class ModalAddFilm extends Component {
 			<MDBContainer>
 
 				{/* this.state.modal */}
-				<MDBModal isOpen={true} toggle={this.toggle} fullHeight position="left">
+				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
 					<MDBModalHeader>Add new film below</MDBModalHeader>
 					<MDBModalBody>
 						<div style={{ marginTop: '50px' }} className={`${filmsStyle.itemContainer}`}>
@@ -82,12 +89,12 @@ class ModalAddFilm extends Component {
 							</div>
 						</div>
 						
-						<TipsContainer />
+						<TipsContainer props={this.props} />
 						
 					</MDBModalBody>
 					<MDBModalFooter>
 						<MDBBtn color="secondary" onClick={this.onOpenClose}>Close</MDBBtn>
-						<MDBBtn color="primary">Add film</MDBBtn>
+						<MDBBtn disabled={!this.state.addFilmButtonStatus} onClick={this.onAddFilm} color="primary">Add film</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>
 			</MDBContainer>

@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import React from 'react';
 import Tips from './Tips'
 
-let mapPropsToState = (state) => {
+let mapStateToProps = (state) => {
     // debugger;
-    console.log('Container say :')
-    console.log(state.filmsPage.addFilmForm.validation)
+    // console.log('Container say :')
+    // console.log(state.filmsPage.addFilmForm.validation)
     return {
         addFilmForm: state.filmsPage.addFilmForm
     }
@@ -16,6 +16,6 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const TipsContainer = connect(mapPropsToState, mapDispatchToProps)(Tips)
+const TipsContainer = connect(mapStateToProps, mapDispatchToProps)(Tips)
 
 export default TipsContainer
