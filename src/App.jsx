@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import s from './App.module.css';
 import FilmsContainer from './components/Content/Films/FilmsContainer';
+import PersonsContainer from './components/Content/Persons/PersonsContainer';
 // import ModalAddFilmContainer from './components/Modals/ModalAddFilmContainer.js';
 
 const App = (props) => {
@@ -16,8 +17,8 @@ const App = (props) => {
             <Header />
             <div className="wrapper">
                 <Route path="/films" render={() => <FilmsContainer />}/>
-                {/* <Route path="/persons" render={() => <PersonsContainer />}/> */}
-                <Redirect from="/" exact to ="/films" />
+                <Route path="/persons" render={() => <PersonsContainer />}/>
+                <Redirect from="/" exact to ="/persons" />
 
             
             

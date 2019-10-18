@@ -12,24 +12,25 @@ let initialState = {
     allFilms: [
         {
             id: 1,
-            name: "Green mile",
-            description: "The film stars Tom Hanks as Paul Edgecomb and Michael Clarke Duncan as John Coffey, with supporting roles by David Morse, Bonnie Hunt, and James Cromwell. It also features Dabbs Greer in his final film role as the older Paul Edgecomb before his death in 2007 at the age of 90 from renal failure and heart"
-        },
-        {
-            id: 2,
             name: "Forrest Gump",
             description: 'American comedy-drama film directed by Robert Zemeckis and written by Eric Roth. It is based on the 1986 novel by Winston Groom, and stars Tom Hanks, Robin Wright, Gary Sinise, Mykelti Williamson, and Sally Field. The story depicts several decades in the life o'
         },
         {
-            id: 3,
-            name: "One Flew Over the Cuckoo's Nest",
-            description: "American comedy-drama film directed by Miloš Forman, based on the 1962 novel One Flew Over the Cuckoo's Nest by Ken Kesey and the play version adapted from the novel by Dale Wasserman. The film stars Jack Nicholson as Randle McMurphy, a new patient at a mental institution, and features a supporting cast of Louise Fletcher, William Redfield, Will Sampson, Sydney Lassick, Brad Dourif, Danny DeVito and Christopher Lloyd in his film debut."
-        },
-        {
-            id: 4,
+            id: 2,
             name: "Great Gatsby",
             description: "Film based on F. Scott Fitzgerald's 1925 novel of the same name. The film was co-written and directed by Baz Luhrmann and stars Leonardo DiCaprio as the eponymous Jay Gatsby, with Tobey Maguire, Carey Mulligan, Joel Edgerton, Isla Fisher and Elizabeth Debicki."
         },
+        {
+            id: 3,
+            name: "Green mile",
+            description: "The film stars Tom Hanks as Paul Edgecomb and Michael Clarke Duncan as John Coffey, with supporting roles by David Morse, Bonnie Hunt, and James Cromwell. It also features Dabbs Greer in his final film role as the older Paul Edgecomb before his death in 2007 at the age of 90 from renal failure and heart"
+        },
+        {
+            id: 4,
+            name: "One Flew Over the Cuckoo's Nest",
+            description: "American comedy-drama film directed by Miloš Forman, based on the 1962 novel One Flew Over the Cuckoo's Nest by Ken Kesey and the play version adapted from the novel by Dale Wasserman. The film stars Jack Nicholson as Randle McMurphy, a new patient at a mental institution, and features a supporting cast of Louise Fletcher, William Redfield, Will Sampson, Sydney Lassick, Brad Dourif, Danny DeVito and Christopher Lloyd in his film debut."
+        }
+        
     ],
     modalAddFilmStatus: false,
     addFilmForm: {
@@ -131,11 +132,9 @@ const addFilm = (state) => {
         name: state.addFilmForm.name,
         description: state.addFilmForm.description
     }
-    // console.log('----------- Before push')
-    // console.log(state.allFilms)
     state.allFilms.push(newFilm)
-    // console.log('+++++++++++ After push')
-    // console.log(state.allFilms)
+    let allFilmsSort = sortByName(state.allFilms)
+    state.allFilms = allFilmsSort
     state.addFilmForm.name = ""
     state.addFilmForm.description = ""
     validateInputName(state)
@@ -159,7 +158,19 @@ const validateInputDescription = (state) => {
     checkForSymbols(state, text)
     return state
 }
+// ____
+// Sort
 
+const sortByName = (array) => {
+    return array.sort((a, b) => {
+        let x = a.name.toLowerCase(); 
+        let y = b.name.toLowerCase();
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
+// ___________________
+// Validation checkers
 
 const checkNameForEmpty = (state, text) => {
     if (text === "") {

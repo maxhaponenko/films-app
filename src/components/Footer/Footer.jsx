@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 const Footer = () => {
     return (
-        <div className={s.footer}>
+        <div className={`${s.footer} cloudy-knoxville-gradient`}>
             
 
         </div>

@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import filmsStyle from '../../Content/Films/Films.module.css'
-import s from './ModalAddFilm.module.css'
+import s from './ModalAddPerson.module.css'
 import TipsContainer from './Tips/TipsContainer'
 
-class ModalAddFilm extends Component {
+class ModalAddPerson extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modal: this.props.filmsPage.modalAddFilmStatus,
-			name: this.props.filmsPage.addFilmForm.name,
-			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus,
+			modal: this.props.personsPage.modalAddPersonStatus,
+			firstName: this.props.personsPage.addPersonForm.firstName,
+			secondName: this.props.personsPage.addPersonForm.secondName,
+			addFilmButtonStatus: this.props.personsPage.addPersonForm.addPersonButtonStatus,
 			props: this.props
 		}
 	}
-
+	
 	onOpenClose = () => {
 		this.setState(() => {
 			this.state.modal = !this.state.modal
 		})
-		this.props.changeFilmModalStatus()
+		this.props.changePersonModalStatus()
 	}
 
 	onInputNameChange = (e) => {
@@ -27,17 +28,17 @@ class ModalAddFilm extends Component {
 		this.setState(() => {
 			this.state.name = text
 		})
-		this.props.changeInputNameText(text)
+		this.props.changeInputFirstName(text)
 	}
 	onInputDescriptionChange = (e) => {
 		let text = e.target.value
 		this.setState(() => {
-			this.state.description = text
+			this.state.secondName = text
 		})
-		this.props.changeInputDescriptionText(text)
+		this.props.changeInputSecondName(text)
 	}
 	onAddFilm = () => {
-		this.props.addFilm()
+		this.props.addPerson()
 	}
 
 
@@ -45,16 +46,16 @@ class ModalAddFilm extends Component {
 		this.setState({
 			modal: !this.state.modal
 		});
-		this.props.changeFilmModalStatus()
+		this.props.changePersonModalStatus()
 	}
  
 	componentWillReceiveProps() {
-		// console.log('-----> Will Receive starts')
+		console.log('-----> Will Receive starts')
 		this.setState(() => {
-			this.state.modal = this.props.filmsPage.modalAddFilmStatus
-			this.state.addFilmButtonStatus = this.props.filmsPage.addFilmForm.addFilmButtonStatus
-			this.state.description = this.props.filmsPage.addFilmForm.description
-			this.state.name = this.props.filmsPage.addFilmForm.name
+			this.state.modal = this.props.personsPage.modalAddPersonStatus
+			this.state.firstName = this.props.personsPage.addPersonForm.firstName
+			this.state.secondName = this.props.personsPage.addPersonForm.secondName
+			this.state.addPersonButtonStatus = this.props.personsPage.addPersonForm.addPersonButtonStatus
 			this.props = this.props
 		})
 		// this.render()
@@ -66,7 +67,7 @@ class ModalAddFilm extends Component {
 
 				{/* this.state.modal */}
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
-					<MDBModalHeader>Add new film</MDBModalHeader>
+					<MDBModalHeader>Add new person</MDBModalHeader>
 					<MDBModalBody>
 						<div style={{ marginTop: '50px' }} className={`${filmsStyle.itemContainer}`}>
 							<div className={filmsStyle.item}>
@@ -102,4 +103,4 @@ class ModalAddFilm extends Component {
 	}
 }
 
-export default ModalAddFilm;
+export default ModalAddPerson;

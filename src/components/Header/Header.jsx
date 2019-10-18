@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 const Header = () => {
     return (
-        <div className={s.header}>
+        <div className={`${s.header} cloudy-knoxville-gradient`}>
             <div className={s.tabs}>
                 <NavLink className={s.menuItem} activeClassName={s.activeMenuItem} to="/films">
                     <p>Films</p>

@@ -1,0 +1,36 @@
+textarea {
+    width: 100%;
+    resize: none;
+    padding: 2px 5px 2px 5px;
+    /* margin-bottom: 150px; */
+    border-radius: 3px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: inset 1px 1px 50px rgba(177, 177, 177, 0.1);
+    background-color: white !important;
+}
+
+
+.titleTextArea {
+    margin-top: 5px;
+    height: 55px;
+
+}
+.descriptionTextArea {
+    margin-top: 1px;
+    height: 198px;
+
+}
+.tipsBlock {
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+}
+.tip {
+    /* width: 300px; */
+    padding: 3px 10px 5px 10px;
+    font-size: 0.85rem;
+}
+.tip p {
+    margin-bottom: 0;
+}
