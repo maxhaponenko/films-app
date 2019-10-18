@@ -1,138 +1,110 @@
 import React from 'react';
-import { Component } from 'react';
 import s from './Tips.module.css';
 import { MDBAlert } from 'mdbreact';
 
-export class Tips extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            nameIsEmpty: this.props.addFilmForm.validation.nameIsEmpty,
-            nameMoreThan: this.props.addFilmForm.validation.nameMoreThan,
-            descriptionIsEmpty: this.props.addFilmForm.validation.descriptionIsEmpty,
-            descriptionMoreThan: this.props.addFilmForm.validation.descriptionMoreThan,
-            descriptionLessThan: this.props.addFilmForm.validation.descriptionLessThan,
-            inputContainSymbols: this.props.addFilmForm.validation.inputContainSymbols
-        }
-    }
-
-    // debugger
-    // let validationData = props.filmsPage.addFilmForm.validation
-
-    
-
-    tip1 = () => {
+const Tips = (props) => {
+    debugger;
+    let tip1 = (value) => {
         // debugger;
-        if (this.state.nameIsEmpty) {
+        if (value) {
             return (
                 <MDBAlert className={s.tip} color="success" >
                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter film name</p>
                 </MDBAlert>
             )
         } else {
-            return (
-                <p>a</p>
-            )
+            return null
         }
-    }
-    tip2 = () => {
-        if (this.state.descriptionIsEmpty) {
+    };
+    let tip2 = (value) => {
+        if (value) {
             return (
                 <MDBAlert className={s.tip} color="success" >
                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter description</p>
                 </MDBAlert>
             )
         } else {
-            return false
+            return null
         }
-    }
-    tip3 = () => {
-        if (this.state.nameMoreThan) {
+    };
+    let tip3 = (value) => {
+        if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Name should be less than 50 characters</p>
                 </MDBAlert>
             )
         } else {
-            return false
+            return null
         }
-    }
-    tip4 = () => {
-        if (this.state.descriptionMoreThan) {
+    };
+    let tip4 = (value) => {
+        if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
                 </MDBAlert>
             )
         } else {
-            return false
+            return null
         }
-    }
-    tip5 = () => {
-        if (this.state.descriptionLessThan) {
+    };
+    let tip5 = (value) => {
+        if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
                 </MDBAlert>
             )
         } else {
-            return false
+            return null
         }
-    }
-    tip6 = () => {
-        if (this.state.inputContainSymbols) {
+    };
+    let tip6 = (value) => {
+        if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
                     <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
                 </MDBAlert>
             )
         } else {
-            return false
+            return null
         }
     }
 
-    // componentDidMount() {
-    //     debugger;
-    //     this.setState(() => { 
-    //         this.state.tipEnterName = this.tip1()
-    //         this.state.tipEnterDescription = this.tip2()
-    //         this.state.tipNameIsBig = this.tip3()
-    //         this.state.tipDescriptionIsBig = this.tip4()
-    //         this.state.tipDescriptionIsSmall = this.tip5()
-    //         this.state.tipTextContainsSymbols = this.tip6()
-    //     })
-    // }
+    let nameIsEmpty = props.addFilmForm.validation.nameIsEmpty
+    let nameMoreThan = props.addFilmForm.validation.nameMoreThan
+    let descriptionIsEmpty = props.addFilmForm.validation.descriptionIsEmpty
+    let descriptionMoreThan = props.addFilmForm.validation.descriptionMoreThan
+    let descriptionLessThan = props.addFilmForm.validation.descriptionLessThan
+    let inputContainSymbols = props.addFilmForm.validation.inputContainSymbols
+    let tipEnterName = tip1(nameIsEmpty)
+    let tipEnterDescription = tip2(descriptionIsEmpty)
+    let tipNameIsBig = tip3(nameMoreThan)
+    let tipDescriptionIsBig = tip4(descriptionMoreThan)
+    let tipDescriptionIsSmall = tip5(descriptionLessThan)
+    let tipTextContainsSymbols = tip6(inputContainSymbols)
 
-    componentWillReceiveProps() {
-		this.setState(() => { 
-            this.state.tipEnterName = this.tip1()
-            this.state.tipEnterDescription = this.tip2()
-            this.state.tipNameIsBig = this.tip3()
-            this.state.tipDescriptionIsBig = this.tip4()
-            this.state.tipDescriptionIsSmall = this.tip5()
-            this.state.tipTextContainsSymbols = this.tip6()
-        })
-		
-	}
+    console.log('Component say: ')
+    console.log(props.addFilmForm.validation)
+    return (
+        <div className={s.tipsBlock}>
+            {tipEnterName}
+            {tipEnterDescription}
+            {tipNameIsBig}
+            {tipDescriptionIsBig}
+            {tipDescriptionIsSmall}
+            {tipTextContainsSymbols}
+        </div>
+
+    )
     
-    
-    render() {
-        return (
-            <div className={s.tipsBlock}>
-                {this.state.tipEnterName}
-                {this.state.tipEnterDescription}
-                {this.state.tipNameIsBig}
-                {this.state.tipDescriptionIsBig}
-                {this.state.tipDescriptionIsSmall}
-                {this.state.tipTextContainsSymbols}
-            </div>
-        )
-    }
-    
+
 }
 
+
 export default Tips
+
 
 
 
@@ -239,3 +211,78 @@ export default Tips
 // }
 
 // export default Tips
+
+
+
+// ____________________
+// TIPS FUNCTIONS --> RETURN JSX
+// this.tip1 = function() {
+//     // debugger;
+//     if (this.state.nameIsEmpty) {
+//         return (
+//             <MDBAlert className={s.tip} color="success" >
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter film name</p>
+//             </MDBAlert>
+//         )
+//     } else {
+//         return (
+//             <p>a</p>
+//         )
+//     }
+// };
+// this.tip2 = function() {
+//     if (this.state.descriptionIsEmpty) {
+//         return (
+//             <MDBAlert className={s.tip} color="success" >
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter description</p>
+//             </MDBAlert>
+//         )
+//     } else {
+//         return false
+//     }
+// };
+// this.tip3 = function() {
+//     if (this.state.nameMoreThan) {
+//         return (
+//             <MDBAlert className={s.tip} color="warning" >
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Name should be less than 50 characters</p>
+//             </MDBAlert>
+//         )
+//     } else {
+//         return false
+//     }
+// };
+// this.tip4 = function() {
+//     if (this.state.descriptionMoreThan) {
+//         return (
+//             <MDBAlert className={s.tip} color="warning" >
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
+//             </MDBAlert>
+//         )
+//     } else {
+//         return false
+//     }
+// };
+// this.tip5 = function() {
+//     if (this.state.descriptionLessThan) {
+//         return (
+//             <MDBAlert className={s.tip} color="warning" >
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
+//             </MDBAlert>
+//         )
+//     } else {
+//         return false
+//     }
+// };
+// this.tip6 = function() {
+//     if (this.state.inputContainSymbols) {
+//         return (
+//             <MDBAlert className={s.tip} color="warning" >
+//                 <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
+//             </MDBAlert>
+//         )
+//     } else {
+//         return false
+//     }
+// }
+

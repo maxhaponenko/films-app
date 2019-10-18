@@ -47,6 +47,8 @@ class ModalAddFilm extends Component {
 	componentWillReceiveProps() {
 		this.setState(() => {
 			this.state.modal = this.props.filmsPage.modalAddFilmStatus
+			
+			
 		})
 		// this.render()
 	}
@@ -56,7 +58,7 @@ class ModalAddFilm extends Component {
 			<MDBContainer>
 
 				{/* this.state.modal */}
-				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
+				<MDBModal isOpen={true} toggle={this.toggle} fullHeight position="left">
 					<MDBModalHeader>Add new film below</MDBModalHeader>
 					<MDBModalBody>
 						<div style={{ marginTop: '50px' }} className={`${filmsStyle.itemContainer}`}>
@@ -81,22 +83,7 @@ class ModalAddFilm extends Component {
 						</div>
 						
 						<TipsContainer />
-						{/* <div className={s.tipsBlock}>
-							
-							
-							<MDBAlert className={s.tip} color="warning" >
-								<p><span><i style={{marginRight: '10px'}} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
-							</MDBAlert>
-							<MDBAlert className={s.tip} color="warning" >
-								<p><span><i style={{marginRight: '10px', fontWeight: 'bold'}} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
-							</MDBAlert>
-							<MDBAlert className={s.tip} color="warning" >
-								<p><span><i style={{marginRight: '10px'}} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
-							</MDBAlert>
-							<MDBAlert className={s.tip} color="warning" >
-								<p><span><i style={{marginRight: '10px'}} className="fas fa-exclamation"></i></span>Name should be less than 50 characters</p>
-							</MDBAlert>
-						</div> */}
+						
 					</MDBModalBody>
 					<MDBModalFooter>
 						<MDBBtn color="secondary" onClick={this.onOpenClose}>Close</MDBBtn>

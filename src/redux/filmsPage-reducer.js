@@ -46,18 +46,6 @@ let initialState = {
             inputContainSymbols: false,
             
         },
-        // validName: {
-        //     status: false,
-        //     numberOfSymbols: 0,
-        //     usingNotAllowedSymbols: false,
-        // },
-        // validDescription: {
-        //     status: false,
-        //     numberOfSymbols: 0,
-        //     usingNotAllowedSymbols: false,
-        // },
-        allTips: [],
-        currentTips: [],
         addFilmButtonStatus: false
     }
 }
@@ -104,7 +92,7 @@ const changeFilmModalStatus = (state) => {
 }
 
 const changeInputNameText = (state, action) => {
-    debugger;
+    // debugger;
     state.addFilmForm.name = action.text
     // console.log('name: ' + state.addFilmForm.name)
     validateInputs(state)
@@ -112,7 +100,7 @@ const changeInputNameText = (state, action) => {
     return newState
 }
 const changeInputDescriptionText = (state, action) => {
-    debugger;
+    // debugger;
     state.addFilmForm.description = action.text
     // console.log('description: ' + state.addFilmForm.description)
     validateInputs(state)
@@ -123,11 +111,17 @@ const validateInputs = (state) => {
     let nameText = state.addFilmForm.name
     let descriptionText = state.addFilmForm.description
     checkNameForEmpty(state, nameText)
+    // console.log(state.addFilmForm.validation)
     checkNameForMaxLength(state, nameText)
+    // console.log(state.addFilmForm.validation)
     checkDescriptionForEmpty(state, descriptionText)
+    // console.log(state.addFilmForm.validation)
     checkDescriptionForMinLength(state, descriptionText)
+    // console.log(state.addFilmForm.validation)
     checkDescriptionForMaxLength(state, descriptionText)
+    // console.log(state.addFilmForm.validation)
     checkForSymbols(state, nameText, descriptionText)
+    // console.log(state.addFilmForm.validation)
     // let newState = { ...state }
     return state
     console.log(state.addFilmForm.validation)
@@ -138,7 +132,7 @@ const checkNameForEmpty = (state, name) => {
     // debugger;
     if (name === "") {
         state.addFilmForm.validation.nameIsEmpty = true
-        console.log('Name text is more than 40 characters')
+        // console.log('Name text is more than 40 characters')
         return state
     } else {
         state.addFilmForm.validation.nameIsEmpty = false
@@ -148,7 +142,7 @@ const checkNameForEmpty = (state, name) => {
 const checkNameForMaxLength = (state, name) => {
     if (name.length > 40) {
         state.addFilmForm.validation.nameMoreThan = true
-        console.log('Name text is more than 40 characters')
+        // console.log('Name text is more than 40 characters')
         return state
     } else {
         state.addFilmForm.validation.nameMoreThan = false
@@ -159,7 +153,7 @@ const checkNameForMaxLength = (state, name) => {
 const checkDescriptionForMinLength = (state, description) => {
     if (description.length < 50) {
         state.addFilmForm.validation.descriptionLessThan = true
-        console.log('Show "descriptionLessThan"')
+        // console.log('Show "descriptionLessThan"')
         return state
     } else {    
         state.addFilmForm.validation.descriptionLessThan = false
@@ -170,22 +164,22 @@ const checkDescriptionForMinLength = (state, description) => {
 const checkDescriptionForMaxLength = (state, description) => {
     if (description.length > 300) {
         state.addFilmForm.validation.descriptionMoreThan = true
-        console.log('Show "descriptionMoreThan"')
+        // console.log('Show "descriptionMoreThan"')
         return state
     } else {
         state.addFilmForm.validation.descriptionMoreThan = false
-        console.log('Hide "descriptionMoreThan"')
+        // console.log('Hide "descriptionMoreThan"')
         return state
     }
 }
 const checkDescriptionForEmpty = (state, description) => {
     if (description === "") {
         state.addFilmForm.validation.descriptionIsEmpty = true
-        console.log('Show "descriptionIsEmpty"')
+        // console.log('Show "descriptionIsEmpty"')
         return state
     } else {
         state.addFilmForm.validation.descriptionIsEmpty = false
-        console.log('Hide "descriptionIsEmpty"')
+        // console.log('Hide "descriptionIsEmpty"')
         return state
     }
 }
@@ -193,10 +187,12 @@ const checkDescriptionForEmpty = (state, description) => {
 const checkForSymbols = (state, name, description) => {
     if (/[-^&*()_+|~={}\[\]<>\/]/.test(name) || /[-^&*()_+|~={}\[\]<>\/]/.test(description)) {
         state.addFilmForm.validation.inputContainSymbols = true
-        console.log('Text should not contain symbols')
+        // console.log('Text should not contain symbols')
+        // console.log('Show "inputContainSymbols"')
         return state
     } else {
         state.addFilmForm.validation.inputContainSymbols = false
+        // console.log('Hide "inputContainSymbols"')
         return state
     }
 }

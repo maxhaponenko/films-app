@@ -4,6 +4,8 @@ import Tips from './Tips'
 
 let mapPropsToState = (state) => {
     // debugger;
+    console.log('Container say :')
+    console.log(state.filmsPage.addFilmForm.validation)
     return {
         addFilmForm: state.filmsPage.addFilmForm
     }
