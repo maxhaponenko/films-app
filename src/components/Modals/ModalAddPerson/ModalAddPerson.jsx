@@ -13,6 +13,7 @@ class ModalAddPerson extends Component {
 			secondName: this.props.personsPage.addPersonForm.secondName,
 			age: this.props.personsPage.addPersonForm.age,
 			addFilmButtonStatus: this.props.personsPage.addPersonForm.addPersonButtonStatus,
+			filmsToAdd: this.props.personsPage.addPersonForm.filmsToAdd,
 			props: this.props,
 			ageCaption: '',
 			stepper: {
@@ -78,9 +79,7 @@ class ModalAddPerson extends Component {
 		this.props.changePersonModalStatus()
 	}
 
-	onAddFilmToFavorites = () => {
-		this.props.addFilmToFavorites(this.e.id)
-	}
+	
 
 	componentWillReceiveProps() {
 		// console.log('-----> Will Receive starts')
@@ -92,8 +91,10 @@ class ModalAddPerson extends Component {
 			this.state.addPersonButtonStatus = this.props.personsPage.addPersonForm.addPersonButtonStatus
 			this.state.stepper.currentStep = this.props.personsPage.addPersonForm.stepper.currentStep
 			this.state.allFilms = this.props.filmsPage.allFilms
+			this.state.filmsToAdd = this.props.personsPage.addPersonForm.filmsToAdd
 			this.props = this.props
 		})
+		
 	}
 
 
@@ -103,11 +104,42 @@ class ModalAddPerson extends Component {
 		this.props.changeStep(number)
 	}
 
+
+	onAddFilmToFavorites = (id) => {
+		this.props.addFilmToFavorites(id)
+		// console.log( "bla bla " + this.state.filmsToAdd.filter( el => el === id ) )
+	}
+	
+
+	// console.log( this.state.filmsToAdd.filter( el => el === e.id ) )
+	// isDisabled = (id) => {
+	// 	let status = this.state.filmsToAdd.find( item => item === id )
+	// 	console.log('the status is ' + status)
+	// 	if (status) {
+	// 		return {padding: "10px"}
+	// 	} else {
+	// 		return {color: 'red'}
+	// 	}
+		
+	// }
+
+	// style={this.state.filmsToAdd.find( el => el == e.id ) ? { fontWeight: '500' } : { fontWeight: '400'} }
+
 	allFilmsNames = () => {
 		// debugger
 		let allFilms = this.props.filmsPage.allFilms.map((e) => {
+			console.log(e.id)
+
 			return (
-				<div key={e.id} onClick={this.onAddFilmToFavorites.bind(e.id)} className={`${s.filmItem} deep-blue-gradient`}>{e.name}</div>
+				<div>
+					<div key={e.id} 
+						onClick={this.onAddFilmToFavorites.bind(this, e.id)} 
+						className={`${s.filmItem} ${this.state.filmsToAdd.find( el => el == e.id ) ? 'deep-blue-gradient' : 'grey lighten-2' }`}>
+						<p style={{marginBottom: 0}} className={s.noselect}>{e.name}</p>
+						</div>
+					
+				</div>
+				
 			)
 		})
 		return allFilms
@@ -120,14 +152,14 @@ class ModalAddPerson extends Component {
 			// console.log('Triggered step ' + this.state.stepper.step)
 			return (
 				<div>
-					<div><span style={{ fontWeight: 'bold' }}>Step 1: &nbsp;</span> Enter persons information</div>
+					<div className={s.noselect}><span style={{ fontWeight: 'bold' }}>Step 1: &nbsp;</span> Enter persons information</div>
 					<div style={{ marginTop: '27px' }} className={`${filmsStyle.itemContainer}`}>
 						<div className={s.item}>
 							{/* className={filmsStyle.itemGrid} */}
 							<div >
 								<div className={s.title}>
-									<p className={s.titleName}>{(this.state.firstName ? this.state.firstName : 'Name')} {(this.state.secondName ? this.state.secondName : 'Second name')}</p>
-									<p className={s.titleAge}>{(this.state.age ? `${this.state.age} ${this.state.ageCaption}` : 'Age')}</p>
+									<p className={`${s.titleName} ${s.noselect}`}>{(this.state.firstName ? this.state.firstName : 'Name')} {(this.state.secondName ? this.state.secondName : 'Second name')}</p>
+									<p className={`${s.titleAge} ${s.noselect}`}>{(this.state.age ? `${this.state.age} ${this.state.ageCaption}` : 'Age')}</p>
 								</div>
 							</div>
 						</div>

@@ -108,13 +108,26 @@ input:last-child {
     /* background-color: grey; */
 }
 .filmItem {
-    padding: 2px 8px 0px 8px;
+    padding: 2px 8px 2px 8px;
     /* box-shadow: 1px 1px 1px rgba(0,0,0,0.3); */
     width: max-content;
     border-radius: 5px;
     margin: 5px 5px 5px 5px;
+    /* box-shadow: 1px 2px 2px rgba(0,0,0,0.2) */
 }
 .filmItem:hover {
-    background-color: blue !important;
+    
     cursor: pointer;
+    /* font-weight: 500; */
+}
+
+.noselect {
+    
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
 }

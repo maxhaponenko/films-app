@@ -88,7 +88,7 @@ let initialState = {
             inputContainSymbols: false,
         },
         stepper: {
-            currentStep: 2
+            currentStep: 1
         },
         addPersonButtonStatus: false
     }
@@ -198,8 +198,21 @@ const changeStep = (state, action) => {
 }
 
 const addFilmToFavorites = (state, action) => {
-    console.log(action.id)
-    return state
+    // console.log(action.id)
+    console.log('IT IS FOUNDED ' + state.addPersonForm.filmsToAdd.filter( el => el === action.id ))
+    if (action.id == (state.addPersonForm.filmsToAdd.filter( el => el === action.id ))) {
+        _.remove(state.addPersonForm.filmsToAdd, (el) => {
+            return el === action.id
+        })
+    } else {
+        state.addPersonForm.filmsToAdd.push(action.id)
+    }
+    
+    
+    console.log(state.addPersonForm.filmsToAdd)
+
+    let newState = { ...state }
+    return newState
 }
 
 const addPerson = (state) => {
