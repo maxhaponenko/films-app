@@ -3,6 +3,15 @@ import s from './Tips.module.css';
 import { MDBAlert } from 'mdbreact';
 
 const Tips = (props) => {
+    
+    // Set props to variables
+    let nameIsEmpty = props.addPersonForm.validation.nameIsEmpty
+    let secondNameIsEmpty = props.addPersonForm.validation.secondNameIsEmpty
+    let ageIsEmpty = props.addPersonForm.validation.ageIsEmpty
+    let nameMoreThan = props.addPersonForm.validation.nameMoreThan
+    let secondNameMoreThan = props.addPersonForm.validation.secondNameMoreThan
+    let unrealAge = props.addPersonForm.validation.unrealAge
+    let inputContainSymbols = props.addPersonForm.validation.inputContainSymbols
 
     // Tips creators
     let tip1 = (value) => {
@@ -10,7 +19,7 @@ const Tips = (props) => {
         if (value) {
             return (
                 <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter film name</p>
+                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter name</p>
                 </MDBAlert>
             )
         } else {
@@ -21,7 +30,7 @@ const Tips = (props) => {
         if (value) {
             return (
                 <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter description</p>
+                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter second name</p>
                 </MDBAlert>
             )
         } else {
@@ -31,8 +40,8 @@ const Tips = (props) => {
     let tip3 = (value) => {
         if (value) {
             return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Name should be less than 50 characters</p>
+                <MDBAlert className={s.tip} color="success" >
+                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter age</p>
                 </MDBAlert>
             )
         } else {
@@ -43,7 +52,7 @@ const Tips = (props) => {
         if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
+                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Name should be less than 15 characters</p>
                 </MDBAlert>
             )
         } else {
@@ -54,7 +63,7 @@ const Tips = (props) => {
         if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
+                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Second name should be less than 20 characters</p>
                 </MDBAlert>
             )
         } else {
@@ -65,7 +74,18 @@ const Tips = (props) => {
         if (value) {
             return (
                 <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
+                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Please enter real age</p>
+                </MDBAlert>
+            )
+        } else {
+            return null
+        }
+    }
+    let tip7 = (value) => {
+        if (value) {
+            return (
+                <MDBAlert className={s.tip} color="warning" >
+                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and second name should not contain symbols</p>
                 </MDBAlert>
             )
         } else {
@@ -73,30 +93,25 @@ const Tips = (props) => {
         }
     }
 
-    // Set props to variables
-    let nameIsEmpty = props.addFilmForm.validation.nameIsEmpty
-    let nameMoreThan = props.addFilmForm.validation.nameMoreThan
-    let descriptionIsEmpty = props.addFilmForm.validation.descriptionIsEmpty
-    let descriptionMoreThan = props.addFilmForm.validation.descriptionMoreThan
-    let descriptionLessThan = props.addFilmForm.validation.descriptionLessThan
-    let inputContainSymbols = props.addFilmForm.validation.inputContainSymbols
 
     // Create tips
     let tipEnterName = tip1(nameIsEmpty)
-    let tipEnterDescription = tip2(descriptionIsEmpty)
-    let tipNameIsBig = tip3(nameMoreThan)
-    let tipDescriptionIsBig = tip4(descriptionMoreThan)
-    let tipDescriptionIsSmall = tip5(descriptionLessThan)
-    let tipTextContainsSymbols = tip6(inputContainSymbols)
+    let tipEnterSecondName = tip2(secondNameIsEmpty)
+    let tipEnterAge = tip3(ageIsEmpty)
+    let tipNameIsBig = tip4(nameMoreThan)
+    let tipSecondNameIsBig = tip5(secondNameMoreThan)
+    let tipUnrealAge = tip6(unrealAge)
+    let tipTextContainsSymbols = tip7(inputContainSymbols)
 
     
     return (
         <div className={s.tipsBlock}>
             {tipEnterName}
-            {tipEnterDescription}
+            {tipEnterSecondName}
+            {tipEnterAge}
             {tipNameIsBig}
-            {tipDescriptionIsBig}
-            {tipDescriptionIsSmall}
+            {tipSecondNameIsBig}
+            {tipUnrealAge}
             {tipTextContainsSymbols}
         </div>
 
@@ -115,14 +130,14 @@ export default Tips
 
 // const Tips = (props) => {
 //     // debugger
-//     // let validationData = props.filmsPage.addFilmForm.validation
+//     // let validationData = props.filmsPage.addPersonForm.validation
 
-//     let nameIsEmpty = props.addFilmForm.validation.nameIsEmpty
-//     let nameMoreThan = props.addFilmForm.validation.nameMoreThan
-//     let descriptionIsEmpty = props.addFilmForm.validation.descriptionIsEmpty
-//     let descriptionMoreThan = props.addFilmForm.validation.descriptionMoreThan
-//     let descriptionLessThan = props.addFilmForm.validation.descriptionLessThan
-//     let inputContainSymbols = props.addFilmForm.validation.inputContainSymbols
+//     let nameIsEmpty = props.addPersonForm.validation.nameIsEmpty
+//     let nameMoreThan = props.addPersonForm.validation.nameMoreThan
+//     let secondNameIsEmpty = props.addPersonForm.validation.secondNameIsEmpty
+//     let secondNameMoreThan = props.addPersonForm.validation.secondNameMoreThan
+//     let secondNameLessThan = props.addPersonForm.validation.secondNameLessThan
+//     let inputContainSymbols = props.addPersonForm.validation.inputContainSymbols
 
 //     let tip1 = () => {
 //         // debugger;
@@ -139,10 +154,10 @@ export default Tips
 //         }
 //     }
 //     let tip2 = () => {
-//         if (descriptionIsEmpty) {
+//         if (secondNameIsEmpty) {
 //             return (
 //                 <MDBAlert className={s.tip} color="success" >
-//                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter description</p>
+//                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter secondName</p>
 //                 </MDBAlert>
 //             )
 //         } else {
@@ -161,10 +176,10 @@ export default Tips
 //         }
 //     }
 //     let tip4 = () => {
-//         if (descriptionMoreThan) {
+//         if (secondNameMoreThan) {
 //             return (
 //                 <MDBAlert className={s.tip} color="warning" >
-//                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
+//                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>secondName should be less than 300 characters</p>
 //                 </MDBAlert>
 //             )
 //         } else {
@@ -172,10 +187,10 @@ export default Tips
 //         }
 //     }
 //     let tip5 = () => {
-//         if (descriptionLessThan) {
+//         if (secondNameLessThan) {
 //             return (
 //                 <MDBAlert className={s.tip} color="warning" >
-//                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
+//                     <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>secondName should contain at least 50 characters</p>
 //                 </MDBAlert>
 //             )
 //         } else {
@@ -186,7 +201,7 @@ export default Tips
 //         if (inputContainSymbols) {
 //             return (
 //                 <MDBAlert className={s.tip} color="warning" >
-//                     <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
+//                     <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and secondName should not contain symbols</p>
 //                 </MDBAlert>
 //             )
 //         } else {
@@ -195,19 +210,19 @@ export default Tips
 //     }
 
 //     let tipEnterName = tip1()
-//     let tipEnterDescription = tip2()
+//     let tipEntersecondName = tip2()
 //     let tipNameIsBig = tip3()
-//     let tipDescriptionIsBig = tip4()
-//     let tipDescriptionIsSmall = tip5()
+//     let tipsecondNameIsBig = tip4()
+//     let tipsecondNameIsSmall = tip5()
 //     let tipTextContainsSymbols = tip6()
 
 //     return (
 //         <div className={s.tipsBlock}>
 //             {tipEnterName}
-//             {tipEnterDescription}
+//             {tipEntersecondName}
 //             {tipNameIsBig}
-//             {tipDescriptionIsBig}
-//             {tipDescriptionIsSmall}
+//             {tipsecondNameIsBig}
+//             {tipsecondNameIsSmall}
 //             {tipTextContainsSymbols}
 //         </div>
 //     )
@@ -234,10 +249,10 @@ export default Tips
 //     }
 // };
 // this.tip2 = function() {
-//     if (this.state.descriptionIsEmpty) {
+//     if (this.state.secondNameIsEmpty) {
 //         return (
 //             <MDBAlert className={s.tip} color="success" >
-//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter description</p>
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter secondName</p>
 //             </MDBAlert>
 //         )
 //     } else {
@@ -256,10 +271,10 @@ export default Tips
 //     }
 // };
 // this.tip4 = function() {
-//     if (this.state.descriptionMoreThan) {
+//     if (this.state.secondNameMoreThan) {
 //         return (
 //             <MDBAlert className={s.tip} color="warning" >
-//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>secondName should be less than 300 characters</p>
 //             </MDBAlert>
 //         )
 //     } else {
@@ -267,10 +282,10 @@ export default Tips
 //     }
 // };
 // this.tip5 = function() {
-//     if (this.state.descriptionLessThan) {
+//     if (this.state.secondNameLessThan) {
 //         return (
 //             <MDBAlert className={s.tip} color="warning" >
-//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
+//                 <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>secondName should contain at least 50 characters</p>
 //             </MDBAlert>
 //         )
 //     } else {
@@ -281,7 +296,7 @@ export default Tips
 //     if (this.state.inputContainSymbols) {
 //         return (
 //             <MDBAlert className={s.tip} color="warning" >
-//                 <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
+//                 <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and secondName should not contain symbols</p>
 //             </MDBAlert>
 //         )
 //     } else {

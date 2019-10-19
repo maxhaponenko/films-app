@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ModalAddPerson from './ModalAddPerson'
-import { changePersonModalStatusCreator, changeInputFirstNameCreator, changeInputSecondNameCreator, addPersonCreator } from '../../../redux/personsPage-reducer'
+import { changePersonModalStatusCreator, changeInputFirstNameCreator, changeInputSecondNameCreator, changeInputAgeCreator, changeStepCreator, addFilmToFavoritesCreator, addPersonCreator } from '../../../redux/personsPage-reducer'
 
 let mapStateToProps = (state) => {
     // debugger
@@ -23,6 +23,18 @@ let mapDispatchToProps = (dispatch) => {
         },
         changeInputSecondName: (text) => {
             let action = changeInputSecondNameCreator(text)
+            dispatch(action)
+        },
+        changeInputAge: (text) => {
+            let action = changeInputAgeCreator(text)
+            dispatch(action)
+        },
+        changeStep: (number) => {
+            let action = changeStepCreator(number)
+            dispatch(action)
+        },
+        addFilmToFavorites: (id) => {
+            let action = addFilmToFavoritesCreator(id)
             dispatch(action)
         },
         addPerson: () => {

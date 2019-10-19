@@ -2,38 +2,38 @@ import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import filmsStyle from '../../Content/Films/Films.module.css'
 import s from './ModalAddFilm.module.css'
-import TipsContainer from './Tips/TipsContainer'
+import TipsContainer from './TipsAddFilm/TipsContainer'
 
 class ModalAddFilm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			modal: this.props.filmsPage.modalAddFilmStatus,
-			name: this.props.filmsPage.addFilmForm.name,
+			// name: this.props.filmsPage.addFilmForm.name,
 			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus,
-			props: this.props
+			// props: this.props
 		}
 	}
 
 	onOpenClose = () => {
-		this.setState(() => {
-			this.state.modal = !this.state.modal
-		})
+		// this.setState(() => {
+		// 	this.state.modal = !this.state.modal
+		// })
 		this.props.changeFilmModalStatus()
 	}
 
 	onInputNameChange = (e) => {
 		let text = e.target.value
-		this.setState(() => {
-			this.state.name = text
-		})
+		// this.setState(() => {
+		// 	this.state.name = text
+		// })
 		this.props.changeInputNameText(text)
 	}
 	onInputDescriptionChange = (e) => {
 		let text = e.target.value
-		this.setState(() => {
-			this.state.description = text
-		})
+		// this.setState(() => {
+		// 	this.state.description = text
+		// })
 		this.props.changeInputDescriptionText(text)
 	}
 	onAddFilm = () => {
@@ -42,9 +42,9 @@ class ModalAddFilm extends Component {
 
 
 	toggle = () => {
-		this.setState({
-			modal: !this.state.modal
-		});
+		// this.setState({
+		// 	modal: !this.state.modal
+		// });
 		this.props.changeFilmModalStatus()
 	}
  
@@ -93,7 +93,7 @@ class ModalAddFilm extends Component {
 						
 					</MDBModalBody>
 					<MDBModalFooter>
-						<MDBBtn color="secondary" onClick={this.onOpenClose}>Close</MDBBtn>
+						<MDBBtn color="darken-1" onClick={this.onOpenClose}>Close</MDBBtn>
 						<MDBBtn disabled={!this.state.addFilmButtonStatus} onClick={this.onAddFilm} color="primary">Add film</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>

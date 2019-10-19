@@ -73,6 +73,8 @@ const deleteCurrentFilm = (state, action) => {
     let newArray = _.remove(allFilms, (el) => {
         return el.id !== filmId
     })
+    console.log("-----------------------------------------------------")
+    console.log(newArray)
     state.allFilms = newArray
     let newState = { ...state }
     return newState

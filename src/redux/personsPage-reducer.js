@@ -6,6 +6,9 @@ const DELETE_CURRENT_PERSON = 'DELETE-CURRENT-PERSON'
 const CHANGE_PERSON_MODAL_STATUS = 'CHANGE-PERSON-MODAL-STATUS'
 const CHANGE_INPUT_FIRST_NAME = 'CHANGE-INPUT-FIRST-NAME'
 const CHANGE_INPUT_SECOND_NAME = 'CHANGE-INPUT-SECOND-NAME'
+const CHANGE_INPUT_AGE = 'CHANGE-INPUT-AGE'
+const CHANGE_STEP = 'CHANGE-STEP'
+const ADD_FILM_TO_FAVORITES ='ADD-FILM-TO-FAVORITES'
 const ADD_PERSON = 'ADD-PERSON'
 
 let initialState = {
@@ -15,7 +18,7 @@ let initialState = {
             firstName: "Max",
             secondName: "Haponenko",
             age: '27 years old',
-            favoriteFilms: [1, 2, 4]
+            favoriteFilms: [1, 2, 3, 4]
         },
         {
             id: 2,
@@ -72,13 +75,20 @@ let initialState = {
     addPersonForm: {
         firstName: '',
         secondName: '',
+        age: '',
+        filmsToAdd: [],
         validation: {
-            nameMoreThan: false,
             nameIsEmpty: true,
-            descriptionMoreThan: false,
-            descriptionLessThan: true,
-            descriptionIsEmpty: true,
+            nameMoreThan: false,
+            secondNameIsEmpty: true,
+            secondName: false,
+            secondNameLessThan: true,
+            ageIsEmpty: true,
+            unrealAge: false,
             inputContainSymbols: false,
+        },
+        stepper: {
+            currentStep: 2
         },
         addPersonButtonStatus: false
     }
@@ -95,6 +105,12 @@ const personsPageReducer = (state = initialState, action) => {
             return changeInputFirstName(state, action)
         case CHANGE_INPUT_SECOND_NAME:
             return changeInputSecondName(state, action)
+        case CHANGE_INPUT_AGE: 
+            return changeInputAge(state, action)
+        case CHANGE_STEP: 
+            return changeStep(state, action)
+        case ADD_FILM_TO_FAVORITES:
+            return addFilmToFavorites(state, action)
         case ADD_PERSON:
             return addPerson(state)
         default: 
@@ -129,18 +145,25 @@ const changePersonModalStatus = (state) => {
 }
 
 const changeInputFirstName = (state, action) => {
-    state.addFilmForm.name = action.text
+    state.addPersonForm.firstName = action.text
     validateInputFirstName(state)
     changeAddButtonStatus(state)
-    // console.log(state.addFilmForm.addFilmButtonStatus)
+    // console.log(state.addPersonForm.addPersonButtonStatus)
     let newState = { ...state }
     return newState
 }
 const changeInputSecondName = (state, action) => {
-    state.addFilmForm.description = action.text
+    state.addPersonForm.secondName = action.text
     validateInputSecondName(state)
     changeAddButtonStatus(state)
-    // console.log(state.addFilmForm.addFilmButtonStatus)
+    // consolea.log(state.addPersonForm.addPersonButtonStatus)
+    let newState = { ...state }
+    return newState
+}
+const changeInputAge = (state, action) => {
+    state.addPersonForm.age = action.text
+    validateInputAge(state)
+    changeAddButtonStatus(state)
     let newState = { ...state }
     return newState
 }
@@ -148,55 +171,84 @@ const changeAddButtonStatus = (state) => {
     // debugger
     var allCheckpoints = []
     // console.log('changeAddButtonStatus say ----->')
-    // console.log(state.addFilmForm.validation)
-    let obj = state.addFilmForm.validation
+    // console.log(state.addPersonForm.validation)
+    let obj = state.addPersonForm.validation
     allCheckpoints = Object.keys(obj).map(key => obj[key]);
     // console.log('changeAddButtonStatus say OBJ ----->')
     // console.log(allCheckpoints)
     if (allCheckpoints.every(item => item === false)) {
-        state.addFilmForm.addFilmButtonStatus = true
+        state.addPersonForm.addPersonButtonStatus = true
         return state
     } else {
-        state.addFilmForm.addFilmButtonStatus = false
+        state.addPersonForm.addPersonButtonStatus = false
         return state
     }
     
 }
+
+const changeStep = (state, action) => {
+    let newStep = action.number
+    if (newStep !== state.addPersonForm.stepper.currentStep) {
+        state.addPersonForm.stepper.currentStep = newStep
+        let newState = { ...state }
+        return newState
+    } else {
+        return state
+    }
+}
+
+const addFilmToFavorites = (state, action) => {
+    console.log(action.id)
+    return state
+}
+
 const addPerson = (state) => {
     let newId = uuidv1()
     let newFilm = {
         id: newId,
-        name: state.addFilmForm.name,
-        description: state.addFilmForm.description
+        name: state.addPersonForm.firstName,
+        description: state.addPersonForm.secondName
     }
-    state.allFilms.push(newFilm)
-    let allFilmsSort = sortByName(state.allFilms)
-    state.allFilms = allFilmsSort
-    state.addFilmForm.name = ""
-    state.addFilmForm.description = ""
+    state.allPersons.push(newFilm)
+    let allPersonsSort = sortByName(state.allPersons)
+    state.allPersons = allPersonsSort
+    state.addPersonForm.firstName = ""
+    state.addPersonForm.secondName = ""
     validateInputFirstName(state)
     validateInputSecondName(state)
     changeAddButtonStatus(state)
     let newState = { ...state }
     return newState
 }
+
+// _________________________
+// -------VALIDATION--------
+
 const validateInputFirstName = (state) => {
-    let text = state.addFilmForm.name
+    let text = state.addPersonForm.firstName
     checkNameForEmpty(state, text)
     checkNameForMaxLength(state, text)
     checkForSymbols(state, text)
     return state
 }
 const validateInputSecondName = (state) => {
-    let text = state.addFilmForm.description
+    let text = state.addPersonForm.secondName
     checkSecondNameForEmpty(state, text)
-    // checkDescriptionForMinLength(state, text)
     checkSecondNameForMaxLength(state, text)
     checkForSymbols(state, text)
     return state
 }
-// ____
-// Sort
+const validateInputAge = (state) => {
+    let text = state.addPersonForm.age
+    console.log('val is started')
+    checkAgeForEmpty(state, text)
+    checkAgeForValue(state, text)
+    return state
+}
+
+
+// ____________
+// ----Sort----
 
 const sortByName = (array) => {
     return array.sort((a, b) => {
@@ -206,64 +258,74 @@ const sortByName = (array) => {
     });
 }
 
-// ___________________
-// Validation checkers
+
+// ___________________________________
+// -------Validation checkers---------
 
 const checkNameForEmpty = (state, text) => {
     if (text === "") {
-        state.addFilmForm.validation.nameIsEmpty = true
+        state.addPersonForm.validation.nameIsEmpty = true
         return state
     } else {
-        state.addFilmForm.validation.nameIsEmpty = false
+        state.addPersonForm.validation.nameIsEmpty = false
         return state
     }
 }
 const checkNameForMaxLength = (state, text) => {
-    if (text.length > 40) {
-        state.addFilmForm.validation.nameMoreThan = true
+    if (text.length > 15) {
+        state.addPersonForm.validation.nameMoreThan = true
         return state
     } else {
-        state.addFilmForm.validation.nameMoreThan = false
+        state.addPersonForm.validation.nameMoreThan = false
         return state
     }
 }
 
-// const checkDescriptionForMinLength = (state, text) => {
-//     if (text.length < 50) {
-//         state.addFilmForm.validation.descriptionLessThan = true
-//         return state
-//     } else {    
-//         state.addFilmForm.validation.descriptionLessThan = false
-//         return state
-//     }
-// }
-
 const checkSecondNameForEmpty = (state, text) => {
     if (text === "") {
-        state.addFilmForm.validation.descriptionIsEmpty = true
+        state.addPersonForm.validation.secondNameIsEmpty = true
         return state
     } else {
-        state.addFilmForm.validation.descriptionIsEmpty = false
+        state.addPersonForm.validation.secondNameIsEmpty = false
         return state
     }
 }
 const checkSecondNameForMaxLength = (state, text) => {
-    if (text.length > 300) {
-        state.addFilmForm.validation.descriptionMoreThan = true
+    if (text.length > 20) {
+        state.addPersonForm.validation.secondNameMoreThan = true
         return state
     } else {
-        state.addFilmForm.validation.descriptionMoreThan = false
+        state.addPersonForm.validation.secondNameMoreThan = false
         return state
     }
 }
 
+const checkAgeForEmpty = (state, text) => {
+    if (text === "") {
+        state.addPersonForm.validation.ageIsEmpty = true
+        return state
+    } else {
+        state.addPersonForm.validation.ageIsEmpty = false
+        return state
+    }
+}
+const checkAgeForValue = (state, text) => {
+    let number = parseInt(text, 10)
+    if (number > 99 || number < 1) {
+        state.addPersonForm.validation.unrealAge = true
+        return state
+    } else {
+        state.addPersonForm.validation.unrealAge = false
+        return state
+    }
+}
 
 const checkForSymbols = (state, text) => {
     if (/[&^*()_+|~={}\[\]<>\/]/.test(text)) {
-        state.addFilmForm.validation.inputContainSymbols = true    
+        state.addPersonForm.validation.inputContainSymbols = true    
         return state
     } else {
-        state.addFilmForm.validation.inputContainSymbols = false
+        state.addPersonForm.validation.inputContainSymbols = false
         return state
     }
 }
@@ -293,6 +355,24 @@ export const changeInputSecondNameCreator = (text) => {
     return {
         type: CHANGE_INPUT_SECOND_NAME,
         text: text
+    }
+}
+export const changeInputAgeCreator = (text) => {
+    return {
+        type: CHANGE_INPUT_AGE,
+        text: text
+    }
+}
+export const changeStepCreator = (number) => {
+    return {
+        type: CHANGE_STEP,
+        number: number
+    }
+}
+export const addFilmToFavoritesCreator = (id) => {
+    return {
+        type: ADD_FILM_TO_FAVORITES,
+        id: id
     }
 }
 export const addPersonCreator = () => {

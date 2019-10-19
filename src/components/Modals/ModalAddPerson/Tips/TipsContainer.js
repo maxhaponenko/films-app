@@ -7,7 +7,7 @@ let mapStateToProps = (state) => {
     // console.log('Container say :')
     // console.log(state.filmsPage.addFilmForm.validation)
     return {
-        addFilmForm: state.filmsPage.addFilmForm
+        addPersonForm: state.personsPage.addPersonForm
     }
 }
 let mapDispatchToProps = (dispatch) => {

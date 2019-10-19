@@ -1,21 +1,77 @@
-textarea {
-    width: 100%;
-    resize: none;
-    padding: 2px 5px 2px 5px;
-    /* margin-bottom: 150px; */
-    border-radius: 3px;
-    font-size: 0.9rem;
-    border: 1px solid rgba(0,0,0,0.2);
-    box-shadow: inset 1px 1px 50px rgba(177, 177, 177, 0.1);
-    background-color: white !important;
+.stepper {
+    display: grid;
+    min-height: 100%;
+    max-height: 100%;
+    grid-template-rows: 1fr 50px;
+    /* overflow: hidden; */
+    grid-template-areas:
+    'container'
+    'switcher';
+}
+.stepperContainer { 
+    grid-area: container;
+
+}
+.stepperSwitcher { 
+    grid-area: switcher;
+    
 }
 
+.item {
+    width: auto;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 69px;
+    /* height: 69px; */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    margin: 0 auto 25px;
+    position: relative;
+    background-color: white;
 
+}
 .titleTextArea {
     margin-top: 5px;
     height: 55px;
 
 }
+
+
+.title { 
+    
+    width: 100%;
+    min-height: 69px;
+    padding: 10px 15px 10px 15px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.title p {
+    max-width: 100%;
+    word-wrap: break-word;
+    margin-bottom: 0;
+}
+.titleName {
+    width: 100%;
+    min-height: 28px;
+}
+.titleAge {
+    font-weight: normal;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+input {
+    margin-bottom: 10px;
+}
+input:last-child {
+    margin-bottom: 0;
+}
+
 .descriptionTextArea {
     margin-top: 1px;
     height: 198px;
@@ -33,4 +89,32 @@ textarea {
 }
 .tip p {
     margin-bottom: 0;
+}
+
+.hideScrollBar {
+    overflow-y: scroll; 
+
+}
+.hideScrollBar::-webkit-scrollbar { 
+    display: none; 
+} 
+.favoritesContainer {
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    /* background-color: grey; */
+}
+.filmItem {
+    padding: 2px 8px 0px 8px;
+    /* box-shadow: 1px 1px 1px rgba(0,0,0,0.3); */
+    width: max-content;
+    border-radius: 5px;
+    margin: 5px 5px 5px 5px;
+}
+.filmItem:hover {
+    background-color: blue !important;
+    cursor: pointer;
 }

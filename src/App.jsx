@@ -10,22 +10,26 @@ import PersonsContainer from './components/Content/Persons/PersonsContainer';
 
 const App = (props) => {
     // debugger;
-    
-    
+
+
     return (
         <div className="appWrapper">
             <Header />
             <div className="wrapper">
-                <Route path="/films" render={() => <FilmsContainer />}/>
-                <Route path="/persons" render={() => <PersonsContainer />}/>
-                <Redirect from="/" exact to ="/persons" />
+                <Route exact path="/" render={() => (
+                    <Redirect to="/persons" />
+                )} />
+                <Route path="/films" render={() => <FilmsContainer />} />
+                <Route path="/persons" render={() => <PersonsContainer />} />
+                
+                
 
-            
-            
+
+
             </div>
             {/* <ModalAddFilmContainer /> */}
             <Footer />
-            
+
         </div>
     );
 }

@@ -1,21 +1,21 @@
 import React from 'react'
 import s from './Persons.module.css'
 import ModalAddPersonContainer from '../../Modals/ModalAddPerson/ModalAddPersonContainer'
+var _ = require('lodash');
 
 const Persons = (props) => {
-    // debugger;
+    
     let onDelete = (e) => {
         props.deleteCurrentPerson(e)
     }
     let openModal = () => {
-        // debugger;
         props.changePersonModalStatus()
-        // ModalAddFilm.changeStatus()
     }
 
     let favoriteFilms = props.personsPage.allPersons.map((el) => {
         let id = el.id
         let favorites = el.favoriteFilms
+        // console.log(favorites)
         let obj = { 
             id: id,
             favorites: favorites
@@ -23,25 +23,31 @@ const Persons = (props) => {
         return obj
     })
 
-    
-    
-    
-    // console.log(personsFavorites)
+    // ______________________
+    // Render all users items
 
     let allPersonsItems = props.personsPage.allPersons.map((item, key) => {
-        
         let allFilms = props.allFilms
-        let personsFavorites = favoriteFilms[key].favorites
-        let favoritesNames = []
-        favoritesNames = personsFavorites.map((el) => {    
-            return allFilms[el-1].name
+        let personFavoriteFilmsId = favoriteFilms[key].favorites
+        let personFavoriteFilms = personFavoriteFilmsId.map((el) => {    
+            var filmId = el
+            let film = allFilms.filter( x => x.id === filmId)
+            if (film[0] !== undefined) {
+                return film[0]
+            } else {
+                return false
+            }
         })
-        let favoriteFilmsNames = favoritesNames.map((e, key) => {
+        _.remove(personFavoriteFilms, (e) => { return e == false });
+        
+        // ______________________________________
+        // Render all favorite films in user item
+        
+        let personFavoriteFilmsNames = personFavoriteFilms.map((e, key) => {
             return (
-                <div key={key} className={`${s.filmItem} deep-blue-gradient`}>{e}</div>
+                <div key={key} className={`${s.filmItem} deep-blue-gradient`}>{e.name}</div>
             )
         })
-        
         return (
             <div key={key} className={`${s.itemContainer}`}>
                 <div className={`${s.item}`}>
@@ -58,7 +64,7 @@ const Persons = (props) => {
                         <div className={s.favorites}>
                             <p className={s.favoritesTitle}>Favorite films:</p>
                             <div className={s.favoritesContainer}>
-                                {favoriteFilmsNames}
+                                {personFavoriteFilmsNames}
                             </div>
                         </div>
                     </div>
