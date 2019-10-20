@@ -46,7 +46,6 @@ class ModalAddFilm extends Component {
 	render() {
 		return (
 			<MDBContainer>
-				{/* this.state.modal */}
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
 					<MDBModalHeader className="noselect">Add new film</MDBModalHeader>
 					<MDBModalBody>

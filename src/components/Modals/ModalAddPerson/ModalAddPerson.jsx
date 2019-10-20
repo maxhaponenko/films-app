@@ -96,16 +96,7 @@ class ModalAddPerson extends Component {
 			return (
 				<div>
 					<div className="noselect"><span style={{ fontWeight: 'bold' }}>Step 1: &nbsp;</span> Enter persons information</div>
-					<div style={{ marginTop: '27px' }} className={`${s.itemContainer}`}>
-						<div className={s.item}>
-							<div>
-								<div className={s.title}>
-									<p className={`${s.titleName} noselect`}>{(this.state.firstName ? this.state.firstName : 'Name')} {(this.state.secondName ? this.state.secondName : 'Second name')}</p>
-									<p className={`${s.titleAge} noselect`}>{(this.state.age ? `${this.state.age} ${this.state.ageCaption}` : 'Age')}</p>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<MDBContainer style={{ width: '250px', marginBottom: '30px' }}>
 						<MDBRow>
 							<MDBCol style={{ padding: '0' }} className={`no-gutters`} md="12">
@@ -137,6 +128,17 @@ class ModalAddPerson extends Component {
 							</MDBCol>
 						</MDBRow>
 					</MDBContainer>
+					<div style={{ marginTop: '27px' }} className={`${s.itemContainer}`}>
+						<p><span style={{ fontWeight: '500' }}>Preview:</span></p>
+						<div className={s.item}>
+							<div>
+								<div className={s.title}>
+									<p className={`${s.titleName} noselect`}>{(this.state.firstName ? this.state.firstName : 'Name')} {(this.state.secondName ? this.state.secondName : 'Second name')}</p>
+									<p className={`${s.titleAge} noselect`}>{(this.state.age ? `${this.state.age} ${this.state.ageCaption}` : 'Age')}</p>
+								</div>
+							</div>
+						</div>
+					</div>
 					<TipsStep1Container props={this.props} />
 				</div>
 			)
@@ -165,8 +167,7 @@ class ModalAddPerson extends Component {
 
 	render() {
 		return (
-			<MDBContainer>
-				{/* this.state.modal */}
+			<MDBContainer className={s.scrollbarSettings}>
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
 					<MDBModalHeader className="noselect">Add new person</MDBModalHeader>
 					<MDBModalBody>

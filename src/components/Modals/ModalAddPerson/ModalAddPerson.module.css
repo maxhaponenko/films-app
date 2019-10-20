@@ -21,8 +21,11 @@
     .itemContainer {
         display: none;
     }
-    label:first-child {
-        margin-top: 15px;
+    
+}
+@media screen and (max-width: 1366px) {
+    .itemContainer {
+        display: none;
     }
 }
 .item {
@@ -63,6 +66,9 @@
     font-weight: normal;
     font-size: 0.9rem;
     opacity: 0.8;
+}
+label:first-child {
+    margin-top: 15px;
 }
 input {
     margin-bottom: 10px;
@@ -118,6 +124,7 @@ input:focus {
 .filmItem:hover {
     cursor: pointer;
 }
+
 @media (max-width: 500px) {
     .modalButtons {
         word-wrap: normal;

@@ -26,3 +26,7 @@ button:hover {
   cursor: pointer !important;
 }
 
+.modal::-webkit-scrollbar {
+  width: 0px;
+  background-color: #F5F5F5;
+} 
