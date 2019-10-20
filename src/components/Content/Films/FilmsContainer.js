@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { connect } from 'react-redux'
 import Films from './Films'
 import { deleteCurrentFilmCreator, changeFilmModalStatusCreator } from '../../../redux/filmsPage-reducer'

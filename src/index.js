@@ -14,7 +14,6 @@ import store from './redux/store';
 
 
 let reRenderEntireTree = (state) => {
-    // debugger;
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>

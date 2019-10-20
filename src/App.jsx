@@ -3,15 +3,10 @@ import './App.css';
 import { Route, Redirect } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import s from './App.module.css';
 import FilmsContainer from './components/Content/Films/FilmsContainer';
 import PersonsContainer from './components/Content/Persons/PersonsContainer';
-// import ModalAddFilmContainer from './components/Modals/ModalAddFilmContainer.js';
 
-const App = (props) => {
-    // debugger;
-
-
+const App = () => {
     return (
         <div className="appWrapper">
             <Header />
@@ -21,15 +16,8 @@ const App = (props) => {
                 )} />
                 <Route path="/films" render={() => <FilmsContainer />} />
                 <Route path="/persons" render={() => <PersonsContainer />} />
-                
-                
-
-
-
             </div>
-            {/* <ModalAddFilmContainer /> */}
             <Footer />
-
         </div>
     );
 }

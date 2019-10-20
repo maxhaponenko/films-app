@@ -4,76 +4,7 @@ import { MDBAlert } from 'mdbreact';
 
 const Tips = (props) => {
 
-    // Tips creators
-    let tip1 = (value) => {
-        // debugger;
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter film name</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip2 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter description</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip3 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Name should be less than 50 characters</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip4 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should be less than 300 characters</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip5 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Description should contain at least 50 characters</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip6 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and description should not contain symbols</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    }
-
-    // Set props to variables
+    // Validation true/false
     let nameIsEmpty = props.addFilmForm.validation.nameIsEmpty
     let nameMoreThan = props.addFilmForm.validation.nameMoreThan
     let descriptionIsEmpty = props.addFilmForm.validation.descriptionIsEmpty
@@ -81,13 +12,36 @@ const Tips = (props) => {
     let descriptionLessThan = props.addFilmForm.validation.descriptionLessThan
     let inputContainSymbols = props.addFilmForm.validation.inputContainSymbols
 
+    // Tips creator
+    let tipCreator = (type, text, icon, color) => {
+        if (type) {
+            return (
+                <MDBAlert className={`${s.tip} noselect`} color={color} >
+                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className={icon}></i></span>{text}</p>
+                </MDBAlert>
+            )
+        } else {
+            return null
+        }
+    }
+
+    // Tips texts
+    let tipTexts = {
+        enterFilmName: 'Enter film name',
+        enterDescription: 'Enter description',
+        nameIsBig: 'Film name should be less than 15 characters',
+        descriptionIsBig: 'Description should be less than 300 characters',
+        descriptionIsSmall: 'Description should contain at least 50 characters',
+        textContainsSymbols: 'Name and description should not contain symbols'
+    }
+
     // Create tips
-    let tipEnterName = tip1(nameIsEmpty)
-    let tipEnterDescription = tip2(descriptionIsEmpty)
-    let tipNameIsBig = tip3(nameMoreThan)
-    let tipDescriptionIsBig = tip4(descriptionMoreThan)
-    let tipDescriptionIsSmall = tip5(descriptionLessThan)
-    let tipTextContainsSymbols = tip6(inputContainSymbols)
+    let tipEnterName = tipCreator(nameIsEmpty, tipTexts.enterFilmName, "fas fa-keyboard", "success")
+    let tipEnterDescription = tipCreator(descriptionIsEmpty, tipTexts.enterDescription, "fas fa-keyboard", "success")
+    let tipNameIsBig = tipCreator(nameMoreThan, tipTexts.nameIsBig, "fas fa-exclamation", "warning")
+    let tipDescriptionIsBig = tipCreator(descriptionMoreThan, tipTexts.descriptionIsBig, "fas fa-exclamation", "warning")
+    let tipDescriptionIsSmall = tipCreator(descriptionLessThan, tipTexts.descriptionIsSmall, "fas fa-exclamation", "warning")
+    let tipTextContainsSymbols = tipCreator(inputContainSymbols, tipTexts.textContainsSymbols, "fab fa-zhihu", "warning")
 
     
     return (

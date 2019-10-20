@@ -38,22 +38,23 @@ const Persons = (props) => {
                 return false
             }
         })
-        _.remove(personFavoriteFilms, (e) => { return e == false });
+        _.remove(personFavoriteFilms, (e) => { return e === false });
         
         // ______________________________________
-        // Render all favorite films in user item
+        // Render all favorite films in each user item
         
         let personFavoriteFilmsNames = personFavoriteFilms.map((e, key) => {
             return (
                 <div key={key} className={`${s.filmItem} deep-blue-gradient`}>{e.name}</div>
             )
         })
+        
         return (
             <div key={key} className={`${s.itemContainer}`}>
                 <div className={`${s.item}`}>
                     <div className={s.deleteButtonContainer}>
-                        <button key={item.id} className={s.btnDeleteFilm} onClick={() => onDelete(item.id)}>
-                            <i className="fas fa-trash-alt" style={{ marginRight: '5px', marginTop: '10px' }}></i>
+                        <button key={item.id} style={{outline: 'none'}} className={s.btnDeletePerson} onClick={() => onDelete(item.id)}>
+                            <i className={`${s.btnDeletePersonIcon} fas fa-trash-alt`} style={{ margin: '10px 5px 10px 5px'}}></i>
                         </button>
                     </div>
                     <div className={s.itemGrid}>

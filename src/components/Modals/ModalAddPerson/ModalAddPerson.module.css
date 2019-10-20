@@ -3,27 +3,20 @@
     min-height: 100%;
     max-height: 100%;
     grid-template-rows: 1fr 50px;
-    /* overflow: hidden; */
     grid-template-areas:
     'container'
     'switcher';
 }
 .stepperContainer { 
     grid-area: container;
-
 }
 .stepperSwitcher { 
     grid-area: switcher;
-    
 }
-
 .item {
     width: auto;
     width: 250px;
-    min-width: 250px;
-    max-width: 250px;
     min-height: 69px;
-    /* height: 69px; */
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 0px;
@@ -32,17 +25,12 @@
     margin: 0 auto 25px;
     position: relative;
     background-color: white;
-
 }
 .titleTextArea {
     margin-top: 5px;
     height: 55px;
-
 }
-
-
 .title { 
-    
     width: 100%;
     min-height: 69px;
     padding: 10px 15px 10px 15px;
@@ -64,18 +52,21 @@
     font-size: 0.9rem;
     opacity: 0.8;
 }
-
 input {
     margin-bottom: 10px;
 }
 input:last-child {
     margin-bottom: 0;
 }
-
+input:hover {
+    cursor: pointer;
+}
+input:focus {
+    cursor: text;
+}
 .descriptionTextArea {
     margin-top: 1px;
     height: 198px;
-
 }
 .tipsBlock {
     width: 300px;
@@ -104,30 +95,15 @@ input:last-child {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
-    /* background-color: grey; */
+    justify-content: flex-start;
 }
 .filmItem {
     padding: 2px 8px 2px 8px;
-    /* box-shadow: 1px 1px 1px rgba(0,0,0,0.3); */
     width: max-content;
     border-radius: 5px;
     margin: 5px 5px 5px 5px;
-    /* box-shadow: 1px 2px 2px rgba(0,0,0,0.2) */
 }
 .filmItem:hover {
-    
     cursor: pointer;
-    /* font-weight: 500; */
 }
 
-.noselect {
-    
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Opera and Firefox */
-}

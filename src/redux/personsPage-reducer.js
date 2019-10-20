@@ -1,45 +1,45 @@
 const uuidv1 = require('uuid/v1');
 var _ = require('lodash');
 
-
 const DELETE_CURRENT_PERSON = 'DELETE-CURRENT-PERSON'
 const CHANGE_PERSON_MODAL_STATUS = 'CHANGE-PERSON-MODAL-STATUS'
 const CHANGE_INPUT_FIRST_NAME = 'CHANGE-INPUT-FIRST-NAME'
 const CHANGE_INPUT_SECOND_NAME = 'CHANGE-INPUT-SECOND-NAME'
 const CHANGE_INPUT_AGE = 'CHANGE-INPUT-AGE'
 const CHANGE_STEP = 'CHANGE-STEP'
-const ADD_FILM_TO_FAVORITES ='ADD-FILM-TO-FAVORITES'
+const ADD_FILM_TO_FAVORITES = 'ADD-FILM-TO-FAVORITES'
+const DELETE_DATA_INFORM = 'DELETE-DATA-INFORM'
 const ADD_PERSON = 'ADD-PERSON'
 
 let initialState = {
     allPersons: [
         {
             id: 1,
-            firstName: "Max",
-            secondName: "Haponenko",
-            age: '27 years old',
-            favoriteFilms: [1, 2, 3, 4]
+            firstName: "Ellie-Mai",
+            secondName: "Rasmussen",
+            age: '59 years old',
+            favoriteFilms: [1, 2, 4]
         },
         {
             id: 2,
-            firstName: "Patrick",
-            secondName: "Kasperskiy",
-            age: '23 years old',
-            favoriteFilms: [2, 3]
-        },
-        {
-            id: 3,
             firstName: "Forrest",
             secondName: "Gump",
             age: '42 years old',
             favoriteFilms: [3, 4]
         },
         {
-            id: 4,
+            id: 3,
             firstName: "John",
             secondName: "Smith",
             age: '59 years old',
             favoriteFilms: [1, 3, 4]
+        },
+        {
+            id: 4,
+            firstName: "Lia",
+            secondName: "Ewing",
+            age: '32 years old',
+            favoriteFilms: [1, 2, 4, 5]
         },
         {
             id: 5,
@@ -50,26 +50,25 @@ let initialState = {
         },
         {
             id: 6,
-            firstName: "Osama",
-            secondName: "Woodward",
-            age: '37 years old',
-            favoriteFilms: [3, 4]
+            firstName: "Max",
+            secondName: "Haponenko",
+            age: '27 years old',
+            favoriteFilms: [1, 2, 3, 5, 6, 7]
         },
         {
             id: 7,
-            firstName: "Ellie-Mai",
-            secondName: "Rasmussen",
-            age: '59 years old',
-            favoriteFilms: [1, 2, 4]
+            firstName: "Osama",
+            secondName: "Woodward",
+            age: '37 years old',
+            favoriteFilms: [3, 4, 6, 8]
         },
         {
             id: 8,
-            firstName: "Lia",
-            secondName: "Ewing",
-            age: '32 years old',
-            favoriteFilms: [1, 2, 4]
-        }
-        
+            firstName: "Patrick",
+            secondName: "Kasperskiy",
+            age: '23 years old',
+            favoriteFilms: [2, 3]
+        }    
     ],
     modalAddPersonStatus: false,
     addPersonForm: {
@@ -77,25 +76,24 @@ let initialState = {
         secondName: '',
         age: '',
         filmsToAdd: [],
+        stepper: {
+            currentStep: 1
+        },
         validation: {
             nameIsEmpty: true,
             nameMoreThan: false,
             secondNameIsEmpty: true,
-            secondName: false,
-            secondNameLessThan: true,
             ageIsEmpty: true,
             unrealAge: false,
             inputContainSymbols: false,
-        },
-        stepper: {
-            currentStep: 1
+            filmsToAddEmpty: true,
+            filmsToAddIsTooBig: false
         },
         addPersonButtonStatus: false
     }
 }
 
 const personsPageReducer = (state = initialState, action) => {
-    // debugger;
     switch(action.type) {
         case DELETE_CURRENT_PERSON:
             return deleteCurrentPerson(state, action)
@@ -111,13 +109,17 @@ const personsPageReducer = (state = initialState, action) => {
             return changeStep(state, action)
         case ADD_FILM_TO_FAVORITES:
             return addFilmToFavorites(state, action)
+        case DELETE_DATA_INFORM: 
+            return deleteDataInForm(state)
         case ADD_PERSON:
             return addPerson(state)
         default: 
             return state
     }
-    
 }
+
+// ___________
+// Delete person
 
 const deleteCurrentPerson = (state, action) => {
     let allPersons = state.allPersons
@@ -130,25 +132,26 @@ const deleteCurrentPerson = (state, action) => {
     return newState
 }
 
+// ___________________
+// Open or close modal
+
 const changePersonModalStatus = (state) => {
-    // debugger;
-    if (state.modalAddPersonStatus === true) {
+    if (state.modalAddPersonStatus) {
         state.modalAddPersonStatus = false
-    } else if (state.modalAddPersonStatus === false) {
-        state.modalAddPersonStatus = true
     } else {
-        // console.log('Unknown status of modalAddFilm')
-    }
-    // state.modalAddPersonStatus = !state.modalAddPersonStatus
+        state.modalAddPersonStatus = true
+    } 
     let newState = { ...state }
     return newState
 }
+
+// ______________
+// Input handlers
 
 const changeInputFirstName = (state, action) => {
     state.addPersonForm.firstName = action.text
     validateInputFirstName(state)
     changeAddButtonStatus(state)
-    // console.log(state.addPersonForm.addPersonButtonStatus)
     let newState = { ...state }
     return newState
 }
@@ -156,7 +159,6 @@ const changeInputSecondName = (state, action) => {
     state.addPersonForm.secondName = action.text
     validateInputSecondName(state)
     changeAddButtonStatus(state)
-    // consolea.log(state.addPersonForm.addPersonButtonStatus)
     let newState = { ...state }
     return newState
 }
@@ -167,15 +169,14 @@ const changeInputAge = (state, action) => {
     let newState = { ...state }
     return newState
 }
+
+// __________________________________
+// Switcher to show or hide AddButton
+
 const changeAddButtonStatus = (state) => {
-    // debugger
     var allCheckpoints = []
-    // console.log('changeAddButtonStatus say ----->')
-    // console.log(state.addPersonForm.validation)
     let obj = state.addPersonForm.validation
     allCheckpoints = Object.keys(obj).map(key => obj[key]);
-    // console.log('changeAddButtonStatus say OBJ ----->')
-    // console.log(allCheckpoints)
     if (allCheckpoints.every(item => item === false)) {
         state.addPersonForm.addPersonButtonStatus = true
         return state
@@ -183,8 +184,27 @@ const changeAddButtonStatus = (state) => {
         state.addPersonForm.addPersonButtonStatus = false
         return state
     }
-    
 }
+
+// ___________________________________
+// Handler to add chosen film to array
+
+const addFilmToFavorites = (state, action) => {
+    if (action.id === (state.addPersonForm.filmsToAdd.filter( el => el === action.id )[0])) {
+        _.remove(state.addPersonForm.filmsToAdd, (el) => {
+            return el === action.id
+        })
+    } else {
+        state.addPersonForm.filmsToAdd.push(action.id)
+    }
+    validateFilmsToAdd(state)
+    changeAddButtonStatus(state)
+    let newState = { ...state }
+    return newState
+}
+
+// ______________
+// Steps switcher
 
 const changeStep = (state, action) => {
     let newStep = action.number
@@ -197,45 +217,60 @@ const changeStep = (state, action) => {
     }
 }
 
-const addFilmToFavorites = (state, action) => {
-    // console.log(action.id)
-    console.log('IT IS FOUNDED ' + state.addPersonForm.filmsToAdd.filter( el => el === action.id ))
-    if (action.id == (state.addPersonForm.filmsToAdd.filter( el => el === action.id ))) {
-        _.remove(state.addPersonForm.filmsToAdd, (el) => {
-            return el === action.id
-        })
-    } else {
-        state.addPersonForm.filmsToAdd.push(action.id)
-    }
-    
-    
-    console.log(state.addPersonForm.filmsToAdd)
+// ______________________________
+// Delete all information in form
 
-    let newState = { ...state }
-    return newState
-}
-
-const addPerson = (state) => {
-    let newId = uuidv1()
-    let newFilm = {
-        id: newId,
-        name: state.addPersonForm.firstName,
-        description: state.addPersonForm.secondName
-    }
-    state.allPersons.push(newFilm)
-    let allPersonsSort = sortByName(state.allPersons)
-    state.allPersons = allPersonsSort
+const deleteDataInForm = (state) => {
     state.addPersonForm.firstName = ""
     state.addPersonForm.secondName = ""
+    state.addPersonForm.age = ""
+    state.addPersonForm.filmsToAdd = []
+    state.addPersonForm.stepper.currentStep = 1
+    // state.modalAddPersonStatus = false         // Set to TRUE if "Cancel" button should close the modal"
     validateInputFirstName(state)
     validateInputSecondName(state)
+    validateInputAge(state)
+    validateFilmsToAdd(state)
     changeAddButtonStatus(state)
     let newState = { ...state }
     return newState
 }
 
-// _________________________
-// -------VALIDATION--------
+// ______________________________
+// Add person to array of all persons 
+//  .then sort array by name
+//  .then delete data from form
+//  .then validate inputs to show tips again
+//  .then disable "add" button 
+
+const addPerson = (state) => {
+    let newId = uuidv1()
+    let newPerson = {
+        id: newId,
+        firstName: state.addPersonForm.firstName,
+        secondName: state.addPersonForm.secondName,
+        age: `${state.addPersonForm.age} years old`,
+        favoriteFilms: state.addPersonForm.filmsToAdd
+    }
+    state.allPersons.push(newPerson)
+    let allPersonsSort = sortByName(state.allPersons)
+    state.allPersons = allPersonsSort
+    state.addPersonForm.firstName = ""
+    state.addPersonForm.secondName = ""
+    state.addPersonForm.age = ""
+    state.addPersonForm.filmsToAdd = []
+    state.addPersonForm.stepper.currentStep = 1
+    validateInputFirstName(state)
+    validateInputSecondName(state)
+    validateInputAge(state)
+    validateFilmsToAdd(state)
+    changeAddButtonStatus(state)
+    let newState = { ...state }
+    return newState
+}
+
+// __________
+// Validation
 
 const validateInputFirstName = (state) => {
     let text = state.addPersonForm.firstName
@@ -253,27 +288,51 @@ const validateInputSecondName = (state) => {
 }
 const validateInputAge = (state) => {
     let text = state.addPersonForm.age
-    console.log('val is started')
     checkAgeForEmpty(state, text)
     checkAgeForValue(state, text)
     return state
 }
 
+const validateFilmsToAdd = (state) => {
+    checkSelectForEmpty(state)
+    checkSelectForTooMany(state)
+    return state
+}
+
+const checkSelectForEmpty = (state) => {
+    if (!state.addPersonForm.filmsToAdd.length) {
+        state.addPersonForm.validation.filmsToAddEmpty = true
+        return state
+    } else {
+        state.addPersonForm.validation.filmsToAddEmpty = false
+        return state
+    }
+}
+
+const checkSelectForTooMany = (state) => {
+    if (state.addPersonForm.filmsToAdd.length > 5) {
+        state.addPersonForm.validation.filmsToAddIsTooBig = true
+        return state
+    } else { 
+        state.addPersonForm.validation.filmsToAddIsTooBig = false
+        return state
+    }
+}
 
 // ____________
 // ----Sort----
 
 const sortByName = (array) => {
     return array.sort((a, b) => {
-        let x = a.name.toLowerCase(); 
-        let y = b.name.toLowerCase();
+        let x = a.firstName.toLowerCase(); 
+        let y = b.firstName.toLowerCase();
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 }
 
 
-// ___________________________________
-// -------Validation checkers---------
+// ___________________
+// Validation checkers
 
 const checkNameForEmpty = (state, text) => {
     if (text === "") {
@@ -334,7 +393,7 @@ const checkAgeForValue = (state, text) => {
 }
 
 const checkForSymbols = (state, text) => {
-    if (/[&^*()_+|~={}\[\]<>\/]/.test(text)) {
+    if (/[&^*()_@#%+|~={}\\<>/]/.test(text)) {
         state.addPersonForm.validation.inputContainSymbols = true    
         return state
     } else {
@@ -346,6 +405,7 @@ const checkForSymbols = (state, text) => {
 
 // _______________
 // ACTION CREATORS 
+
 export const deleteCurrentPersonCreator = (id) => {
     return {
         type: DELETE_CURRENT_PERSON,
@@ -388,6 +448,11 @@ export const addFilmToFavoritesCreator = (id) => {
         id: id
     }
 }
+export const deleteDataInFormCreator = () => {
+    return {
+        type: DELETE_DATA_INFORM
+    }
+}
 export const addPersonCreator = () => {
     return {
         type: ADD_PERSON
@@ -395,4 +460,3 @@ export const addPersonCreator = () => {
 }
 export default personsPageReducer
 
-// window.state = initialState

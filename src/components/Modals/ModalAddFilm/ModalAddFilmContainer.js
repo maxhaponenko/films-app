@@ -1,7 +1,6 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import ModalAddFilm from './ModalAddFilm'
-import { changeFilmModalStatusCreator, changeInputNameTextCreator, changeInputDescriptionTextCreator, addFilmCreator } from '../../../redux/filmsPage-reducer'
+import { changeFilmModalStatusCreator, changeInputNameTextCreator, changeInputDescriptionTextCreator, deleteDataInFormCreator, addFilmCreator } from '../../../redux/filmsPage-reducer'
 
 let mapStateToProps = (state) => {
     return {
@@ -11,7 +10,6 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
     return {
         changeFilmModalStatus: () => {
-            // debugger;
             let action = changeFilmModalStatusCreator()
             dispatch(action)
         },
@@ -21,6 +19,10 @@ let mapDispatchToProps = (dispatch) => {
         },
         changeInputDescriptionText: (text) => {
             let action = changeInputDescriptionTextCreator(text)
+            dispatch(action)
+        },
+        deleteDataInForm: () => {
+            let action = deleteDataInFormCreator()
             dispatch(action)
         },
         addFilm: () => {

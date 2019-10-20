@@ -19,8 +19,8 @@ const Films = (props) => {
             <div key={key} className={`${s.itemContainer}`}>
                 <div className={s.item}>
                     <div className={s.deleteButtonContainer}>
-                        <button key={item.id} className={s.btnDeleteFilm} onClick={() => onDelete(item.id)}>
-                            <i className="fas fa-trash-alt" style={{ marginRight: '5px', marginTop: '10px' }}></i>
+                        <button key={item.id} className={s.btnDeleteFilm} style={{outline: 'none'}} onClick={() => onDelete(item.id)}>
+                            <i className={`${s.btnDeleteFilmIcon} fas fa-trash-alt`} style={{ margin: '10px 5px 10px 5px'}}></i>
                         </button>
                     </div>
                     <div className={s.itemGrid}>

@@ -9,66 +9,49 @@ class ModalAddFilm extends Component {
 		super(props);
 		this.state = {
 			modal: this.props.filmsPage.modalAddFilmStatus,
-			// name: this.props.filmsPage.addFilmForm.name,
-			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus,
-			// props: this.props
+			name: this.props.filmsPage.addFilmForm.name,
+			description: this.props.filmsPage.addFilmForm.description,
+			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus
 		}
 	}
-
+	UNSAFE_componentWillReceiveProps() {
+		this.setState({
+			modal: this.props.filmsPage.modalAddFilmStatus,
+			name: this.props.filmsPage.addFilmForm.name,
+			description: this.props.filmsPage.addFilmForm.description,
+			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus
+			// this.props = this.props
+		})
+	}
 	onOpenClose = () => {
-		// this.setState(() => {
-		// 	this.state.modal = !this.state.modal
-		// })
 		this.props.changeFilmModalStatus()
 	}
-
 	onInputNameChange = (e) => {
 		let text = e.target.value
-		// this.setState(() => {
-		// 	this.state.name = text
-		// })
 		this.props.changeInputNameText(text)
 	}
 	onInputDescriptionChange = (e) => {
 		let text = e.target.value
-		// this.setState(() => {
-		// 	this.state.description = text
-		// })
 		this.props.changeInputDescriptionText(text)
 	}
 	onAddFilm = () => {
 		this.props.addFilm()
 	}
-
-
-	toggle = () => {
-		// this.setState({
-		// 	modal: !this.state.modal
-		// });
-		this.props.changeFilmModalStatus()
+	onCancel = () => {
+		this.props.deleteDataInForm()
 	}
- 
-	componentWillReceiveProps() {
-		// console.log('-----> Will Receive starts')
-		this.setState(() => {
-			this.state.modal = this.props.filmsPage.modalAddFilmStatus
-			this.state.addFilmButtonStatus = this.props.filmsPage.addFilmForm.addFilmButtonStatus
-			this.state.description = this.props.filmsPage.addFilmForm.description
-			this.state.name = this.props.filmsPage.addFilmForm.name
-			this.props = this.props
-		})
-		// this.render()
+	toggle = () => {
+		this.props.changeFilmModalStatus()
 	}
 
 	render() {
 		return (
 			<MDBContainer>
-
-				{/* this.state.modal */}
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
-					<MDBModalHeader>Add new film</MDBModalHeader>
+					<MDBModalHeader className="noselect">Add new film</MDBModalHeader>
 					<MDBModalBody>
-						<div style={{ marginTop: '50px' }} className={`${filmsStyle.itemContainer}`}>
+						<div className="noselect">Add <span style={{ fontWeight: '500' }}>film name</span> and <span style={{ fontWeight: '500' }}>description below</span></div>
+						<div style={{ marginTop: '27px' }} className={`${filmsStyle.itemContainer}`}>
 							<div className={filmsStyle.item}>
 								<div className={filmsStyle.itemGrid}>
 									<div className={filmsStyle.title}>
@@ -88,13 +71,12 @@ class ModalAddFilm extends Component {
 								</div>
 							</div>
 						</div>
-						
 						<TipsContainer props={this.props} />
-						
 					</MDBModalBody>
-					<MDBModalFooter>
-						<MDBBtn color="darken-1" onClick={this.onOpenClose}>Close</MDBBtn>
-						<MDBBtn disabled={!this.state.addFilmButtonStatus} onClick={this.onAddFilm} color="primary">Add film</MDBBtn>
+					<MDBModalFooter style={{padding: '0.3rem', fontSize: '0.3rem'}}>
+						<MDBBtn color="white" onClick={this.onOpenClose}>Close</MDBBtn>
+						<MDBBtn color="white" onClick={this.onCancel}>Cancel</MDBBtn>
+						<MDBBtn disabled={!this.state.addFilmButtonStatus} onClick={this.onAddFilm} gradient="blue">Add</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>
 			</MDBContainer>

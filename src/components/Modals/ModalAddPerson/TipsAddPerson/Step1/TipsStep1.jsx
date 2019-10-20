@@ -1,10 +1,10 @@
 import React from 'react';
-import s from './Tips.module.css';
+import s from '../Tips.module.css';
 import { MDBAlert } from 'mdbreact';
 
 const Tips = (props) => {
     
-    // Set props to variables
+    // Validation true/false
     let nameIsEmpty = props.addPersonForm.validation.nameIsEmpty
     let secondNameIsEmpty = props.addPersonForm.validation.secondNameIsEmpty
     let ageIsEmpty = props.addPersonForm.validation.ageIsEmpty
@@ -13,79 +13,12 @@ const Tips = (props) => {
     let unrealAge = props.addPersonForm.validation.unrealAge
     let inputContainSymbols = props.addPersonForm.validation.inputContainSymbols
 
-    // Tips creators
-    let tip1 = (value) => {
-        // debugger;
-        if (value) {
+    // Tips creator
+    let tipCreator = (type, text, icon, color) => {
+        if (type) {
             return (
-                <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter name</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip2 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter second name</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip3 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="success" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-keyboard"></i></span>Enter age</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip4 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Name should be less than 15 characters</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip5 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px' }} className="fas fa-exclamation"></i></span>Second name should be less than 20 characters</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    };
-    let tip6 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Please enter real age</p>
-                </MDBAlert>
-            )
-        } else {
-            return null
-        }
-    }
-    let tip7 = (value) => {
-        if (value) {
-            return (
-                <MDBAlert className={s.tip} color="warning" >
-                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className="fab fa-zhihu"></i></span>Name and second name should not contain symbols</p>
+                <MDBAlert className={`${s.tip} noselect`} color={color} >
+                    <p><span><i style={{ marginRight: '10px', fontWeight: 'bold' }} className={icon}></i></span>{text}</p>
                 </MDBAlert>
             )
         } else {
@@ -93,17 +26,25 @@ const Tips = (props) => {
         }
     }
 
-
-    // Create tips
-    let tipEnterName = tip1(nameIsEmpty)
-    let tipEnterSecondName = tip2(secondNameIsEmpty)
-    let tipEnterAge = tip3(ageIsEmpty)
-    let tipNameIsBig = tip4(nameMoreThan)
-    let tipSecondNameIsBig = tip5(secondNameMoreThan)
-    let tipUnrealAge = tip6(unrealAge)
-    let tipTextContainsSymbols = tip7(inputContainSymbols)
-
+    let tipTexts = {
+        enterName: 'Enter name',
+        enterSecondName: 'Enter second name',
+        enterAge: 'Enter age',
+        nameIsBig: 'Name should be less than 15 characters',
+        secondNameIsBig: 'Second name should be less than 20 characters',
+        unrealAge: 'Don`t joke with us! Please, enter real age',
+        textContainsSymbols: 'Name and second name should not contain symbols'
+    }
     
+    // Create tips
+    let tipEnterName = tipCreator(nameIsEmpty, tipTexts.enterName, "fas fa-keyboard", "success")
+    let tipEnterSecondName = tipCreator(secondNameIsEmpty, tipTexts.enterSecondName, "fas fa-keyboard", "success")
+    let tipEnterAge = tipCreator(ageIsEmpty, tipTexts.enterAge, "fas fa-keyboard", "success")
+    let tipNameIsBig = tipCreator(nameMoreThan, tipTexts.nameIsBig, "fas fa-exclamation", "warning")
+    let tipSecondNameIsBig = tipCreator(secondNameMoreThan, tipTexts.secondNameIsBig, "fas fa-exclamation", "warning")
+    let tipUnrealAge = tipCreator(unrealAge, tipTexts.unrealAge, "fab fa-zhihu", "warning")
+    let tipTextContainsSymbols = tipCreator(inputContainSymbols, tipTexts.textContainsSymbols, "fab fa-zhihu", "warning")
+
     return (
         <div className={s.tipsBlock}>
             {tipEnterName}
@@ -114,10 +55,7 @@ const Tips = (props) => {
             {tipUnrealAge}
             {tipTextContainsSymbols}
         </div>
-
     )
-    
-
 }
 
 

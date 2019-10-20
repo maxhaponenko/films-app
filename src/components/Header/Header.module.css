@@ -29,19 +29,3 @@
 .activeMenuItem {
     background-color: rgb(224, 224, 224);
 }
-/* 
-.tabs ul {
-    display: flex;
-    height: inherit;
-    margin-bottom: 0;
-    margin-block-start: 0;
-    padding-inline-start: 0;
-}
-.tabs ul li {
-    display: inline-block;
-    height: 100%;
-    width: max-content;
-    display: flex;
-    position: relative; */
-/* } */
-
