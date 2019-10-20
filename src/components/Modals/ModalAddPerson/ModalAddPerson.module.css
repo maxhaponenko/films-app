@@ -10,8 +10,20 @@
 .stepperContainer { 
     grid-area: container;
 }
+
 .stepperSwitcher { 
     grid-area: switcher;
+}
+.itemContainer {
+    min-width: 270px;
+}
+@media (max-width: 500px) {
+    .itemContainer {
+        display: none;
+    }
+    label:first-child {
+        margin-top: 15px;
+    }
 }
 .item {
     width: auto;
@@ -106,4 +118,11 @@ input:focus {
 .filmItem:hover {
     cursor: pointer;
 }
-
+@media (max-width: 500px) {
+    .modalButtons {
+        word-wrap: normal;
+        padding: 0.7rem 1rem;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+}

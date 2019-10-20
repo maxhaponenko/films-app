@@ -20,7 +20,6 @@ class ModalAddFilm extends Component {
 			name: this.props.filmsPage.addFilmForm.name,
 			description: this.props.filmsPage.addFilmForm.description,
 			addFilmButtonStatus: this.props.filmsPage.addFilmForm.addFilmButtonStatus
-			// this.props = this.props
 		})
 	}
 	onOpenClose = () => {
@@ -47,11 +46,12 @@ class ModalAddFilm extends Component {
 	render() {
 		return (
 			<MDBContainer>
+				{/* this.state.modal */}
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
 					<MDBModalHeader className="noselect">Add new film</MDBModalHeader>
 					<MDBModalBody>
 						<div className="noselect">Add <span style={{ fontWeight: '500' }}>film name</span> and <span style={{ fontWeight: '500' }}>description below</span></div>
-						<div style={{ marginTop: '27px' }} className={`${filmsStyle.itemContainer}`}>
+						<div style={{ marginTop: '27px' }} className={`${s.itemContainer}`}>
 							<div className={filmsStyle.item}>
 								<div className={filmsStyle.itemGrid}>
 									<div className={filmsStyle.title}>
@@ -74,9 +74,9 @@ class ModalAddFilm extends Component {
 						<TipsContainer props={this.props} />
 					</MDBModalBody>
 					<MDBModalFooter style={{padding: '0.3rem', fontSize: '0.3rem'}}>
-						<MDBBtn color="white" onClick={this.onOpenClose}>Close</MDBBtn>
-						<MDBBtn color="white" onClick={this.onCancel}>Cancel</MDBBtn>
-						<MDBBtn disabled={!this.state.addFilmButtonStatus} onClick={this.onAddFilm} gradient="blue">Add</MDBBtn>
+						<MDBBtn className={s.modalButtons} color="white" onClick={this.onOpenClose}>Close</MDBBtn>
+						<MDBBtn className={s.modalButtons} color="white" onClick={this.onCancel}>Cancel</MDBBtn>
+						<MDBBtn className={s.modalButtons} disabled={!this.state.addFilmButtonStatus} onClick={this.onAddFilm} gradient="blue">Add</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>
 			</MDBContainer>

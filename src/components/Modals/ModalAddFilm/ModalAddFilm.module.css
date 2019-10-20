@@ -37,3 +37,11 @@ textarea:focus {
 .tip p {
     margin-bottom: 0;
 }
+@media (max-width: 500px) {
+    .modalButtons {
+        word-wrap: normal;
+        padding: 0.7rem 1rem;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+}

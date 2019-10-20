@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBCol } from 'mdbreact';
-import filmsStyle from '../../Content/Films/Films.module.css'
 import s from './ModalAddPerson.module.css'
 import TipsStep1Container from './TipsAddPerson/Step1/TipsStep1Container'
 import TipsStep2Container from './TipsAddPerson/Step2/TipsStep2Container'
@@ -18,8 +17,6 @@ class ModalAddPerson extends Component {
 			filmsToAdd: this.props.personsPage.addPersonForm.filmsToAdd,
 			addPersonButtonStatus: this.props.personsPage.addPersonForm.addPersonButtonStatus,
 			ageCaption: '',
-			
-			// props: this.props,
 		}
 	}
 
@@ -33,8 +30,6 @@ class ModalAddPerson extends Component {
 			age: this.props.personsPage.addPersonForm.age,
 			filmsToAdd: this.props.personsPage.addPersonForm.filmsToAdd,
 			addPersonButtonStatus: this.props.personsPage.addPersonForm.addPersonButtonStatus
-
-			// this.props = this.props
 		})
 
 	}
@@ -101,7 +96,7 @@ class ModalAddPerson extends Component {
 			return (
 				<div>
 					<div className="noselect"><span style={{ fontWeight: 'bold' }}>Step 1: &nbsp;</span> Enter persons information</div>
-					<div style={{ marginTop: '27px' }} className={`${filmsStyle.itemContainer}`}>
+					<div style={{ marginTop: '27px' }} className={`${s.itemContainer}`}>
 						<div className={s.item}>
 							<div>
 								<div className={s.title}>
@@ -150,7 +145,7 @@ class ModalAddPerson extends Component {
 				<div>
 					<div><span style={{ fontWeight: 'bold' }}>Step 2: &nbsp;</span> Choose favorite films</div>
 
-					<MDBContainer style={{ width: '350px', marginBottom: '30px' }}>
+					<MDBContainer style={{ width: '350px', maxWidth: 'fit-content', marginBottom: '30px' }}>
 						<MDBRow>
 							<MDBCol style={{ padding: '0' }} className={`no-gutters`} md="12">
 								<div className={s.favoritesContainer}>
@@ -171,6 +166,7 @@ class ModalAddPerson extends Component {
 	render() {
 		return (
 			<MDBContainer>
+				{/* this.state.modal */}
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle} fullHeight position="left">
 					<MDBModalHeader className="noselect">Add new person</MDBModalHeader>
 					<MDBModalBody>
@@ -187,9 +183,9 @@ class ModalAddPerson extends Component {
 						</div>
 					</MDBModalBody>
 					<MDBModalFooter style={{ padding: '0.3rem' }}>
-						<MDBBtn color="white" onClick={this.onOpenClose}>Close</MDBBtn>
-						<MDBBtn color="white" onClick={this.onCancel}>Cancel</MDBBtn>
-						<MDBBtn disabled={!this.state.addPersonButtonStatus} onClick={this.onAddPerson} gradient="blue" >Add</MDBBtn>
+						<MDBBtn className={s.modalButtons} color="white" onClick={this.onOpenClose}>Close</MDBBtn>
+						<MDBBtn className={s.modalButtons} color="white" onClick={this.onCancel}>Cancel</MDBBtn>
+						<MDBBtn className={s.modalButtons} disabled={!this.state.addPersonButtonStatus} onClick={this.onAddPerson} gradient="blue" >Add</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>
 			</MDBContainer>
