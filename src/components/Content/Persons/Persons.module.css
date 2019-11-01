@@ -12,13 +12,13 @@
     display: block;
 }
 .filmsBlock {
-    width: 100%;
+    width: auto;
     height: auto;
-    margin-bottom: 50px;
+    padding: 0 5px 0 5px;
+    margin: 0 auto 50px;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-basis: 300px;
 }
 .item {
@@ -28,10 +28,16 @@
     max-width: 250px;
     height: auto;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
     margin: 0 auto 25px;
     position: relative;
     background-color: white;
+}
+.item:hover {
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+}
+.item:focus {
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
 }
 .itemContainer {
     min-width: 270px;

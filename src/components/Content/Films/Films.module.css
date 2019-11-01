@@ -17,8 +17,7 @@
     margin-bottom: 50px;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-basis: 300px;
 }
 .item {

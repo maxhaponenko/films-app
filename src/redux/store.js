@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux'
+import { applyMiddleware, createStore, combineReducers } from 'redux'
+import { save, load } from 'redux-localstorage-simple'
 import filmsPageReducer from "./filmsPage-reducer"
 import personsPageReducer from './personsPage-reducer'
 
@@ -7,7 +8,9 @@ let reducers = combineReducers({
     personsPage: personsPageReducer
 })
 
-let store = createStore(reducers)
+const createStoreWithMiddleware = applyMiddleware(save())(createStore)
+
+let store = createStoreWithMiddleware(reducers, load())    
 
 
 
